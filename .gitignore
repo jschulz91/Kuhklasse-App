@@ -1,0 +1,11 @@
+content/sets/*/index.json
+node_modules/
+.DS_Store
+
+# Fotos/Scans von Arbeitsblättern gehören nicht ins Repo (persönliche Daten)
+*.jpg
+*.jpeg
+*.JPG
+*.JPEG
+*.heic
+*.HEIC

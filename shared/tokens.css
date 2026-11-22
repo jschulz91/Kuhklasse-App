@@ -1,0 +1,70 @@
+/* Kuhklasse – Gestaltungs-Grundlagen
+   Fünf Farben, sonst nichts. Abgeleitete Töne entstehen nur per color-mix
+   aus diesen fünf. */
+
+@font-face {
+  font-family: "ABeeZee";
+  src: url("../assets/fonts/ABeeZee-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Slot für die Grundschrift. Datei selbst ablegen:
+   assets/fonts/grundschrift.woff2 – fehlt sie, greift die Druckschrift. */
+@font-face {
+  font-family: "Grundschrift";
+  src: url("../assets/fonts/grundschrift.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  /* Palette */
+  --creme: #fbf5e7;    /* Hintergrund */
+  --wiese: #86a95a;    /* Wiesengrün */
+  --scheune: #b23a2c;  /* Scheunenrot – nur für den Hauptknopf */
+  --fleck: #3b2a1f;    /* Kuhfleck-Dunkelbraun – Text und Konturen */
+  --himmel: #d3e8ef;   /* helles Himmelblau */
+
+  /* abgeleitet (keine neuen Farben) */
+  --schnauze: #f0d9cf;
+  --schnauze: color-mix(in srgb, var(--scheune) 16%, var(--creme));
+  --fleck-hell: #9b8a7c;
+  --fleck-hell: color-mix(in srgb, var(--fleck) 50%, var(--creme));
+  --wiese-hell: #dfe8cf;
+  --wiese-hell: color-mix(in srgb, var(--wiese) 30%, var(--creme));
+
+  /* Linien */
+  --kontur: 3px;
+  --linie: var(--kontur) solid var(--fleck);
+
+  /* leicht unregelmäßige Rundungen – nichts ist ganz gerade */
+  --rund-gross: 30px 38px 32px 42px / 36px 30px 40px 32px;
+  --rund-mittel: 18px 24px 20px 26px / 22px 18px 26px 20px;
+  --rund-klein: 10px 14px 11px 15px / 13px 10px 15px 11px;
+  --rund-kreis: 52% 48% 50% 47% / 49% 53% 47% 51%;
+
+  /* Schrift */
+  --schrift-ui: "ABeeZee", "Trebuchet MS", system-ui, sans-serif;
+  --schrift-lesen: "ABeeZee", "Trebuchet MS", system-ui, sans-serif;
+
+  /* Abstände */
+  --luft-1: 8px;
+  --luft-2: 16px;
+  --luft-3: 24px;
+  --luft-4: 40px;
+  --luft-5: 64px;
+
+  /* Kindbereich: Mindestgröße für Touch */
+  --touch: 64px;
+
+  /* Bewegung (Maschine ruckelt, Kuh läuft heraus, Zeiger der Zähluhr) */
+  --dauer-ruckeln: 360ms;
+  --dauer-kuh: 1800ms;
+}
+
+:root[data-schrift="grund"] {
+  --schrift-lesen: "Grundschrift", "ABeeZee", "Trebuchet MS", system-ui, sans-serif;
+}

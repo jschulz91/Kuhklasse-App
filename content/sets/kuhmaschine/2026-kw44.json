@@ -1,0 +1,16 @@
+{
+  "spiel": "kuhmaschine",
+  "jahr": 2026,
+  "kw": 44,
+  "titel": "Leseblatt 1: Mm",
+  "notiz": "Silben mit L und M, Vokale a und o",
+  "daten": {
+    "anlaute": ["L", "M"],
+    "vokale": ["a", "o"],
+    "silben": ["Ma", "Mo", "La", "Lo"],
+    "woerter": [
+      "Lo-la", "Mo-mo", "La-ma", "Ma-ma", "Mo-la", "O-ma", "A-mo",
+      "Lo-lo-mo", "La-ma-la", "Ma-lo-ma", "Mo-lo-la", "A-la-lo"
+    ]
+  }
+}

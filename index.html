@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fbf5e7">
+  <title>Kuhklasse</title>
+  <link rel="icon" href="assets/svg/kachel-kuhmaschine.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="shared/tokens.css">
+  <link rel="stylesheet" href="shared/base.css">
+  <style>
+    .start {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      padding: clamp(24px, 5vh, 56px) clamp(16px, 4vw, 48px) var(--luft-5);
+    }
+
+    .start__kopf {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(12px, 3vw, 28px);
+      margin-bottom: clamp(32px, 7vh, 72px);
+    }
+
+    .start__kopf h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.05;
+    }
+
+    .start__kuh {
+      width: clamp(96px, 14vw, 150px);
+      flex: none;
+    }
+
+    .fach + .fach {
+      margin-top: clamp(40px, 7vh, 72px);
+    }
+
+    .fach h2 {
+      display: inline-block;
+      margin-bottom: var(--luft-3);
+      font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    }
+
+    .fach h2::after {
+      content: "";
+      display: block;
+      height: 8px;
+      margin-top: 2px;
+      border: 3px solid var(--fleck);
+      border-radius: 6px 9px 7px 10px / 5px 4px 6px 5px;
+      background: var(--fach-farbe, var(--wiese));
+    }
+
+    .kacheln {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+      gap: var(--luft-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kachel {
+      display: grid;
+      min-height: var(--touch);
+      overflow: hidden;
+      border: var(--linie);
+      border-radius: var(--rund-gross);
+      background: var(--creme);
+      color: var(--fleck);
+      text-decoration: none;
+    }
+
+    .kachel:active {
+      transform: translateY(2px);
+    }
+
+    .kachel__bild {
+      display: grid;
+      place-items: center;
+      padding: var(--luft-3) var(--luft-3) 0;
+      background: var(--fach-farbe-hell, var(--himmel));
+      border-bottom: var(--linie);
+    }
+
+    .kachel__bild img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+    }
+
+    .kachel__name {
+      padding: 14px var(--luft-3) 18px;
+      font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+    }
+
+    .start__fehler {
+      max-width: 40ch;
+    }
+  </style>
+</head>
+<body>
+  <main class="start">
+    <header class="start__kopf">
+      <div class="start__kuh" id="kuh"></div>
+      <h1>Kuhklasse</h1>
+    </header>
+    <div id="faecher"></div>
+    <p class="start__fehler" id="fehler" hidden>Die Spieleliste konnte nicht geladen werden. Bitte die Seite neu laden.</p>
+  </main>
+
+  <script type="module">
+    import { ladeFaecher, ladeSpiele } from './shared/content.js';
+    import { allgemein, wendeSchriftAn } from './shared/settings.js';
+    import { erzeugeKuh } from './shared/cow.js';
+    import { el } from './shared/ui.js';
+
+    wendeSchriftAn(allgemein().get('schrift'));
+    document.getElementById('kuh').innerHTML = erzeugeKuh();
+
+    const farbe = (name) => `var(--${String(name).replace(/[^a-z-]/g, '')})`;
+
+    try {
+      const [faecher, spiele] = await Promise.all([ladeFaecher(), ladeSpiele()]);
+      const abschnitte = faecher
+        .map((fach) => ({ fach, spiele: spiele.filter((spiel) => spiel.fach === fach.id) }))
+        .filter(({ spiele }) => spiele.length > 0)
+        .map(({ fach, spiele }) => {
+          const abschnitt = el(
+            'section',
+            { class: 'fach', 'aria-labelledby': `fach-${fach.id}` },
+            el('h2', { id: `fach-${fach.id}`, text: fach.titel }),
+            el(
+              'ul',
+              { class: 'kacheln' },
+              spiele.map((spiel) =>
+                el(
+                  'li',
+                  {},
+                  el(
+                    'a',
+                    { class: 'kachel', href: spiel.pfad },
+                    el('span', { class: 'kachel__bild' }, el('img', { src: spiel.bild, alt: '', width: 240, height: 170 })),
+                    el('span', { class: 'kachel__name', text: spiel.titel }),
+                  ),
+                ),
+              ),
+            ),
+          );
+          abschnitt.style.setProperty('--fach-farbe', farbe(fach.farbe));
+          abschnitt.style.setProperty('--fach-farbe-hell', `color-mix(in srgb, ${farbe(fach.farbe)} 30%, var(--creme))`);
+          return abschnitt;
+        });
+      document.getElementById('faecher').replaceChildren(...abschnitte);
+    } catch {
+      document.getElementById('fehler').hidden = false;
+    }
+  </script>
+</body>
+</html>

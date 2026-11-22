@@ -1,0 +1,12 @@
+{
+  "spiele": [
+    {
+      "id": "kuhmaschine",
+      "titel": "Kuhmaschine",
+      "fach": "lesen",
+      "pfad": "games/kuhmaschine/",
+      "bild": "assets/svg/kachel-kuhmaschine.svg",
+      "sets": true
+    }
+  ]
+}

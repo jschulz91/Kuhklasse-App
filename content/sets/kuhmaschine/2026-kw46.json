@@ -1,0 +1,17 @@
+{
+  "spiel": "kuhmaschine",
+  "jahr": 2026,
+  "kw": 46,
+  "titel": "Leseblatt 3: Ss",
+  "notiz": "Silben mit L, M, S, Vokale a, o, i",
+  "daten": {
+    "anlaute": ["L", "M", "S"],
+    "vokale": ["a", "o", "i"],
+    "silben": ["Ma", "Mo", "Mi", "La", "Lo", "Li", "Sa", "So", "Si"],
+    "woerter": [
+      "O-mi", "Li-sa", "Mi-lo", "Si-mi", "Sa-la-mi", "Li-mo", "Li-li",
+      "Si-ma", "Ma-ma", "A-mi", "Lo-la", "Ma-mi", "li-la", "La-mas",
+      "Si-la-mi-so", "So-ma-si", "Mi-sa-mi-la", "La-mi-so-mi"
+    ]
+  }
+}

@@ -1,0 +1,408 @@
+/* Kuhklasse – gemeinsame Grundlagen für Startseite und Spiele */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--creme);
+  color: var(--fleck);
+  font-family: var(--schrift-ui);
+  font-size: 1.125rem;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  font-weight: 400;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px dashed var(--fleck);
+  outline-offset: 4px;
+}
+
+.nur-vorlesen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Linien-Stil für alle eigenen SVGs ---------- */
+
+.strich,
+.strich * {
+  stroke: var(--fleck);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.f-creme { fill: var(--creme); }
+.f-wiese { fill: var(--wiese); }
+.f-scheune { fill: var(--scheune); }
+.f-fleck { fill: var(--fleck); }
+.f-himmel { fill: var(--himmel); }
+.f-schnauze { fill: var(--schnauze); }
+.f-fleck-hell { fill: var(--fleck-hell); }
+.f-keine { fill: none; }
+.ohne-strich { stroke: none !important; }
+
+.kuh text {
+  font-family: var(--schrift-lesen);
+  fill: var(--fleck);
+  stroke: none;
+}
+
+/* ---------- Kopfleiste (Kindbereich) ---------- */
+
+.leiste {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--luft-2);
+  padding: var(--luft-2) clamp(16px, 3vw, 32px);
+}
+
+.leiste__rechts {
+  display: flex;
+  align-items: center;
+  gap: var(--luft-2);
+}
+
+.icon-knopf {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--touch);
+  min-height: var(--touch);
+  padding: 10px;
+  border: var(--linie);
+  border-radius: var(--rund-mittel);
+  background: var(--creme);
+  color: var(--fleck);
+  text-decoration: none;
+}
+
+.icon-knopf svg {
+  width: 38px;
+  height: 38px;
+}
+
+.icon-knopf:active {
+  transform: translateY(2px);
+}
+
+.eltern-knopf {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--luft-1);
+  min-height: var(--touch);
+  padding: 0 18px;
+  border: 2px dashed var(--fleck-hell);
+  border-radius: var(--rund-mittel);
+  background: transparent;
+  color: var(--fleck);
+  font-size: 1rem;
+}
+
+.eltern-knopf svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- Elternbereich (Seitenleiste) ---------- */
+
+.eltern {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 20;
+  width: min(420px, 100vw);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--luft-3) var(--luft-3) var(--luft-5);
+  background: var(--creme);
+  border-left: var(--linie);
+  font-size: 1rem;
+}
+
+.eltern__kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--luft-2);
+  margin-bottom: var(--luft-3);
+}
+
+.eltern__kopf h2 {
+  font-size: 1.5rem;
+}
+
+.eltern__zu {
+  min-width: 48px;
+  min-height: 48px;
+  border: var(--linie);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+}
+
+.eltern__zu svg {
+  width: 22px;
+  height: 22px;
+  margin: auto;
+}
+
+.eltern__abschnitt {
+  padding: var(--luft-3) 0;
+  border-top: 2px dashed var(--fleck-hell);
+}
+
+.eltern__abschnitt > h3,
+.eltern__abschnitt > summary {
+  margin-bottom: var(--luft-2);
+  font-size: 1.2rem;
+}
+
+.eltern__abschnitt > summary {
+  cursor: pointer;
+  margin-bottom: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.eltern__abschnitt[open] > summary {
+  margin-bottom: var(--luft-2);
+}
+
+.eltern .hinweis {
+  margin-top: var(--luft-1);
+  color: var(--fleck);
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+.eltern .warnung {
+  margin-top: var(--luft-2);
+  padding: 10px 14px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--himmel);
+  font-size: 0.95rem;
+}
+
+.feld {
+  display: grid;
+  gap: 6px;
+  margin-bottom: var(--luft-2);
+}
+
+.feld > span,
+.feld > legend {
+  font-size: 0.95rem;
+}
+
+.eltern select,
+.eltern input[type="text"],
+.eltern input[type="number"],
+.eltern textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+}
+
+.eltern textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.eltern fieldset {
+  margin: var(--luft-2) 0;
+  padding: 0;
+  border: 0;
+}
+
+.eltern fieldset > legend {
+  padding: 0;
+  margin-bottom: var(--luft-1);
+}
+
+/* Umschalter mit zwei bis drei Möglichkeiten */
+.wahl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luft-1);
+}
+
+.wahl label {
+  position: relative;
+  display: inline-flex;
+}
+
+.wahl input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+}
+
+.wahl span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+  cursor: pointer;
+}
+
+.wahl input:checked + span {
+  background: var(--wiese);
+}
+
+.wahl input:focus-visible + span {
+  outline: 3px dashed var(--fleck);
+  outline-offset: 3px;
+}
+
+/* Buchstaben-Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 10px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+  font-family: var(--schrift-lesen);
+  font-size: 1.2rem;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--wiese);
+}
+
+.chip:disabled {
+  cursor: not-allowed;
+}
+
+.knopf-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+}
+
+.knopf-text--voll {
+  background: var(--wiese);
+}
+
+.knopf-text:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.knopf-reihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luft-1);
+  margin-top: var(--luft-2);
+}
+
+/* ---------- Set-Editor ---------- */
+
+.editor__woche {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--luft-2);
+}
+
+.editor__fehler {
+  margin: var(--luft-2) 0 0;
+  padding: 10px 14px 10px 34px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--himmel);
+  font-size: 0.95rem;
+}
+
+.editor__fehler li + li {
+  margin-top: 4px;
+}
+
+.editor__ok {
+  margin-top: var(--luft-2);
+  font-size: 0.95rem;
+}
+
+.editor__pfad {
+  display: block;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border-radius: var(--rund-klein);
+  background: var(--wiese-hell);
+  font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

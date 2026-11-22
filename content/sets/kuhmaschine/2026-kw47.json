@@ -1,0 +1,16 @@
+{
+  "spiel": "kuhmaschine",
+  "jahr": 2026,
+  "kw": 47,
+  "titel": "Leseblatt 4: Tt",
+  "notiz": "Silben mit L, M, S, T, Vokale a, o, i",
+  "daten": {
+    "anlaute": ["L", "M", "S", "T"],
+    "vokale": ["a", "o", "i"],
+    "silben": ["Ma", "Mo", "Mi", "La", "Lo", "Li", "Sa", "So", "Si", "Ta", "To", "Ti"],
+    "woerter": [
+      "O-mi", "Li-sa", "Ma-ma", "Ma-mi", "Sa-lat", "O-ma", "A-mi",
+      "Lo-la", "La-mas"
+    ]
+  }
+}

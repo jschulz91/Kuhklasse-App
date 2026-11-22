@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fbf5e7">
+  <title>Kuhmaschine · Kuhklasse</title>
+  <link rel="icon" href="../../assets/svg/kachel-kuhmaschine.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <link rel="stylesheet" href="game.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <header class="leiste">
+    <a class="icon-knopf" href="../../" aria-label="Zur Startseite">
+      <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path class="f-creme" d="M5,36 L6,17 L20,5 L34,16 L35,36 Z"/>
+        <path class="f-wiese" d="M14,36 L14,24 L26,24 L26,36 Z"/>
+        <path class="f-keine" d="M14,24 L26,36 M26,24 L14,36"/>
+      </svg>
+    </a>
+
+    <p class="vorschau-hinweis" id="vorschau-hinweis" hidden>
+      <span>Vorschau: <span id="vorschau-titel"></span></span>
+      <button type="button" class="knopf-text" id="vorschau-ende">Beenden</button>
+    </p>
+
+    <div class="leiste__rechts">
+      <button type="button" class="icon-knopf vollbild-knopf" id="vollbild" aria-label="Vollbild" aria-pressed="false">
+        <svg class="strich vollbild-an" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M6,15 L6,6 L15,6 M25,6 L34,6 L34,15 M34,25 L34,34 L25,34 M15,34 L6,34 L6,25"/>
+        </svg>
+        <svg class="strich vollbild-aus" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M15,6 L15,15 L6,15 M25,6 L25,15 L34,15 M34,25 L25,25 L25,34 M6,25 L15,25 L15,34"/>
+        </svg>
+      </button>
+      <button type="button" class="eltern-knopf" id="eltern-auf" aria-controls="eltern" aria-expanded="false">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M5,12 L35,12 M5,28 L35,28"/>
+          <path class="f-creme" d="M10,12 C10,7 18,7 18,12 C18,17 10,17 10,12 Z"/>
+          <path class="f-creme" d="M22,28 C22,23 30,23 30,28 C30,33 22,33 22,28 Z"/>
+        </svg>
+        Eltern
+      </button>
+    </div>
+  </header>
+
+  <main class="buehne">
+    <h1 class="nur-vorlesen">Kuhmaschine</h1>
+
+    <div class="hof">
+      <div class="maschine" id="maschine" style="--n: 2">
+        <svg class="maschine__kannen strich" viewBox="0 0 170 114" aria-hidden="true" focusable="false">
+          <path class="f-creme" d="M18,114 L20,64 C20,54 30,50 38,46 L40,30 L68,30 L70,46 C78,50 88,54 88,64 L90,114 Z"/>
+          <path class="f-keine" d="M21,82 C40,86 70,85 89,81"/>
+          <path class="f-keine" d="M88,58 C99,58 101,72 89,74"/>
+          <path class="f-himmel" d="M35,31 C35,20 73,20 73,31 Z"/>
+          <path class="f-creme" d="M49,21 C48,13 60,12 59,21 Z"/>
+          <path class="f-creme" d="M106,114 L107,82 C107,75 114,72 120,70 L121,60 L141,60 L142,70 C148,72 155,75 155,82 L156,114 Z"/>
+          <path class="f-keine" d="M107,95 C122,97 140,97 155,94"/>
+          <path class="f-himmel" d="M117,61 C117,52 145,52 145,61 Z"/>
+        </svg>
+        <svg class="maschine__uhr strich" viewBox="0 0 110 114" aria-hidden="true" focusable="false">
+          <path class="f-creme" d="M48,114 L49,76 L62,76 L63,114 Z"/>
+          <path class="f-creme" d="M55,7 C77,6 92,23 91,44 C91,65 76,81 55,80 C33,81 18,65 19,44 C19,23 34,8 55,7 Z"/>
+          <path class="f-wiese ohne-strich" d="M55,44 L82.8,41.1 A28,28 0 0 1 79.2,58 Z"/>
+          <path class="f-keine" d="M30.8,58 L35.1,55.5 M30.8,30 L35.1,32.5 M55,16 L55,21 M79.2,30 L74.9,32.5 M79.2,58 L74.9,55.5"/>
+          <text id="uhr-zahl" x="55" y="68" font-size="15" text-anchor="middle">0</text>
+          <g class="uhr__zeiger" id="uhr-zeiger" style="transform: rotate(150deg)">
+            <path class="f-keine" d="M55,44 L77,44"/>
+          </g>
+          <path class="f-fleck" d="M50,44 C50,39 60,39 60,44 C60,49 50,49 50,44 Z"/>
+        </svg>
+
+        <div class="maschine__koerper">
+          <div class="fenster-reihe" id="fenster" aria-live="polite" aria-atomic="true">
+            <div class="fenster"><span class="silbe"></span></div>
+            <div class="fenster"><span class="silbe"></span></div>
+          </div>
+          <p class="wortschild" id="wort" aria-hidden="true"></p>
+        </div>
+
+        <svg class="maschine__klappe strich" viewBox="0 0 60 110" aria-hidden="true" focusable="false">
+          <path class="f-creme" d="M3,108 L3,34 C3,14 14,4 30,4 C46,4 57,14 57,34 L57,108 Z"/>
+          <path class="f-fleck" d="M13,108 L13,38 C13,22 20,14 30,14 C40,14 47,22 47,38 L47,108 Z"/>
+        </svg>
+
+        <svg class="boden boden--maschine strich" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path class="f-wiese" d="M0,9 C90,5 170,12 260,8 C350,4 430,11 520,8 C610,5 700,12 790,9 C870,6 940,11 1000,8 L1000,30 L0,30 Z"/>
+        </svg>
+
+        <div class="maschine__beine" aria-hidden="true">
+          <svg class="strich" viewBox="0 0 50 46" focusable="false">
+            <path class="f-creme" d="M17,0 L15,33 L7,35 C2,36 2,44 7,44 L43,44 C48,44 48,36 43,35 L35,33 L33,0 Z"/>
+          </svg>
+          <svg class="strich" viewBox="0 0 50 46" focusable="false">
+            <path class="f-creme" d="M17,0 L15,33 L7,35 C2,36 2,44 7,44 L43,44 C48,44 48,36 43,35 L35,33 L33,0 Z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="weideplatz" id="weideplatz"></div>
+
+      <svg class="boden strich" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="f-wiese" d="M0,10 C80,6 150,13 240,9 C330,5 410,12 500,8 C600,4 680,12 770,9 C860,6 930,11 1000,8 L1000,30 L0,30 Z"/>
+      </svg>
+    </div>
+
+    <div class="knoepfe">
+      <button type="button" class="hauptknopf" id="neu" aria-label="Neues Wort">
+        <svg class="strich" viewBox="0 0 160 124" aria-hidden="true" focusable="false">
+          <path class="f-himmel" d="M12,106 C10,93 22,87 38,87 L122,87 C138,87 150,93 148,106 C148,116 140,121 126,121 L34,121 C20,121 12,116 12,106 Z"/>
+          <g class="hauptknopf__kuppel">
+            <path class="f-creme" d="M52,92 L53,72 L107,72 L108,92 Z"/>
+            <path class="f-scheune" d="M28,78 C26,40 52,16 81,17 C111,17 135,41 132,78 C112,88 48,88 28,78 Z"/>
+            <path class="f-keine" style="stroke: var(--creme); stroke-width: 5" d="M50,48 C56,37 64,32 73,30"/>
+          </g>
+        </svg>
+      </button>
+
+      <button type="button" class="gelesen-knopf" id="gelesen" aria-label="Gelesen">
+        <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <path class="f-wiese strich" d="M60,6 C90,5 115,28 114,60 C114,90 90,115 60,114 C29,115 6,91 6,60 C6,29 30,6 60,6 Z"/>
+          <path fill="none" stroke="var(--fleck)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" d="M35,62 L52,79 L86,42"/>
+          <path fill="none" stroke="var(--creme)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" d="M35,62 L52,79 L86,42"/>
+        </svg>
+        <span class="gelesen-knopf__text">Gelesen</span>
+      </button>
+    </div>
+  </main>
+
+  <aside class="eltern" id="eltern" aria-labelledby="eltern-titel" hidden>
+    <div class="eltern__kopf">
+      <h2 id="eltern-titel">Elternbereich</h2>
+      <button type="button" class="eltern__zu" id="eltern-zu" aria-label="Elternbereich schließen">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M10,10 L30,30 M30,10 L10,30"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="eltern__abschnitt">
+      <h3>Woche</h3>
+      <label class="feld">
+        <span>Was zeigt die Maschine?</span>
+        <select id="woche"></select>
+      </label>
+      <p class="hinweis" id="woche-info"></p>
+      <p class="warnung" id="woche-fehler" hidden></p>
+
+      <fieldset id="inhalt-auswahl">
+        <legend>Aus dem Set nehmen</legend>
+        <div class="wahl">
+          <label><input type="radio" name="inhalt" value="gemischt"><span>Gemischt</span></label>
+          <label><input type="radio" name="inhalt" value="woerter"><span>Nur Wörter</span></label>
+          <label><input type="radio" name="inhalt" value="silben"><span>Nur Silben</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="eltern__abschnitt" id="buchstaben-abschnitt">
+      <h3>Buchstaben für Zufall</h3>
+      <p class="hinweis">Nur antippen, was schon gelernt ist. Eine Silbe ist immer Anlaut + Vokal.</p>
+      <fieldset>
+        <legend>Anlaute</legend>
+        <div class="chips" id="anlaute"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Vokale</legend>
+        <div class="chips" id="vokale"></div>
+      </fieldset>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Silben pro Wort</h3>
+      <div class="wahl">
+        <label><input type="radio" name="silbenzahl" value="2"><span>2</span></label>
+        <label><input type="radio" name="silbenzahl" value="3"><span>3</span></label>
+        <label><input type="radio" name="silbenzahl" value="4"><span>4</span></label>
+        <label><input type="radio" name="silbenzahl" value="gemischt"><span>2 oder 3</span></label>
+      </div>
+      <p class="hinweis">Gilt für zusammengesetzte Silben. Wörter vom Blatt behalten ihre Silben.</p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Kuh</h3>
+      <div class="wahl">
+        <label><input type="radio" name="kuh" value="nachLesen"><span>Erst nach dem Lesen</span></label>
+        <label><input type="radio" name="kuh" value="automatisch"><span>Automatisch zeigen</span></label>
+      </div>
+      <p class="hinweis">„Erst nach dem Lesen“ zeigt den grünen Knopf „Gelesen“.</p>
+      <p class="hinweis">Die Uhr auf der Maschine zählt jede Kuh mit, bis 20, danach beginnt sie bei 0.</p>
+      <div class="knopf-reihe">
+        <button type="button" class="knopf-text" id="zaehler-null">Uhr auf 0 stellen</button>
+      </div>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Schrift</h3>
+      <div class="wahl">
+        <label><input type="radio" name="schrift" value="druck"><span>Druckschrift</span></label>
+        <label><input type="radio" name="schrift" value="grund"><span>Grundschrift</span></label>
+      </div>
+      <p class="warnung" id="schrift-hinweis" hidden>Die Datei assets/fonts/grundschrift.woff2 fehlt noch. Bis sie da ist, wird Druckschrift gezeigt.</p>
+    </section>
+
+    <details class="eltern__abschnitt">
+      <summary>Neues Wochen-Set anlegen</summary>
+      <div id="editor"></div>
+    </details>
+  </aside>
+</body>
+</html>

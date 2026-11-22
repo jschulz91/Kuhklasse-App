@@ -1,0 +1,5 @@
+{
+  "hinweis": "Zufallswörter der Kuhmaschine, die nie erscheinen sollen. 'woerter' = genau dieses Wort, 'teile' = Wort enthält diesen Teil. Groß/klein egal.",
+  "woerter": ["Kaka", "Pipi", "Popo", "Pupu", "Pupi", "Mumu", "Hure", "Nazi", "Tote", "Tod"],
+  "teile": ["kack", "kaka", "pipi", "popo", "pupu", "pups", "piss", "fick", "hure", "nazi", "mumu", "fotze", "schei", "schiss", "sau", "titte", "tötet"]
+}
