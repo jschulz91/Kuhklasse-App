@@ -60,6 +60,8 @@ Außerdem gibt es eine Vollbild-Ansicht und die Wahl zwischen Druckschrift und G
 - **Keine Fotos oder Scans von Arbeitsblättern im Projekt.** Aus den Übungsblättern werden nur
   einzelne Silben und Wörter übernommen.
 
+Die Datenschutz-Hinweise stehen auch in der App selbst (Link unten auf der Startseite).
+
 ## Technik in Kürze
 
 Reines HTML, CSS und JavaScript, ohne Framework und ohne externe Abhängigkeiten.

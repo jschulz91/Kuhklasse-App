@@ -96,7 +96,18 @@
       font-size: clamp(1.4rem, 2.6vw, 1.8rem);
     }
 
-    .start__fehler {
+.start__fuss {
+      margin-top: var(--luft-5);
+      padding-top: var(--luft-3);
+      border-top: 2px dashed var(--fleck-hell);
+      font-size: 1rem;
+    }
+
+    .start__fuss a {
+      color: var(--fleck);
+    }
+
+        .start__fehler {
       max-width: 40ch;
     }
   </style>
@@ -109,6 +120,9 @@
     </header>
     <div id="faecher"></div>
     <p class="start__fehler" id="fehler" hidden>Die Spieleliste konnte nicht geladen werden. Bitte die Seite neu laden.</p>
+      <footer class="start__fuss">
+      <a href="datenschutz.html">Datenschutz</a>
+    </footer>
   </main>
 
   <script type="module">

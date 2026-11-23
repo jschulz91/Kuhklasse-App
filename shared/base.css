@@ -421,6 +421,10 @@ button {
   font-size: 1.6rem;
 }
 
+.hinweis a {
+  color: var(--fleck);
+}
+
 .hinweis p + p {
   margin-top: 12px;
 }
