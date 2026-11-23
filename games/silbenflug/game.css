@@ -1,0 +1,347 @@
+/* Silbenflug – eine Silbe nach der anderen, wie die Flugzeug-Tabelle auf dem Leseblatt */
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ---------- Wolken als Fortschritt ---------- */
+
+.wolken {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  max-width: min(46vw, 620px);
+}
+
+.wolke {
+  width: clamp(14px, 1.9vw, 24px);
+  height: auto;
+}
+
+.wolke path {
+  fill: transparent;
+  stroke: var(--fleck-hell);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.wolke[data-geschafft="ja"] path {
+  fill: var(--himmel);
+  stroke: var(--fleck);
+}
+
+/* ---------- Himmel und Flug ---------- */
+
+.himmel {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  justify-items: center;
+  padding: 0 clamp(16px, 3vw, 40px) clamp(16px, 4vh, 40px);
+  overflow: hidden;
+}
+
+.luftraum {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.flug {
+  display: flex;
+  align-items: center;
+}
+
+.flug.kommt {
+  animation: flug-kommt 1100ms cubic-bezier(0.25, 0.7, 0.35, 1);
+}
+
+.flug.geht {
+  animation: flug-geht 850ms cubic-bezier(0.5, 0, 0.75, 0.5) forwards;
+}
+
+@keyframes flug-kommt {
+  from { transform: translateX(-100vw) translateY(4vh); }
+  to { transform: none; }
+}
+
+@keyframes flug-geht {
+  from { transform: none; }
+  to { transform: translateX(100vw) translateY(-6vh); }
+}
+
+.banner {
+  display: grid;
+  place-items: center;
+  min-width: clamp(180px, 30vw, 380px);
+  padding: 0 0.5em;
+  background: var(--creme);
+  border: var(--linie);
+  border-radius: var(--rund-mittel);
+}
+
+/* Die Silbe: der eine Blickfang */
+.banner__silbe {
+  font-family: var(--schrift-lesen);
+  font-size: clamp(4.5rem, min(17vw, 28vh), 13rem);
+  line-height: 1.3;
+  padding-bottom: 0.06em;
+  white-space: nowrap;
+  color: var(--fleck);
+}
+
+.banner__silbe:empty::before {
+  content: "\00a0";
+}
+
+.seil {
+  width: clamp(24px, 4vw, 56px);
+  border-top: var(--linie);
+}
+
+.flugzeug {
+  width: clamp(110px, 16vw, 200px);
+  height: auto;
+}
+
+/* ---------- Landung und Kuhherde ---------- */
+
+.landung {
+  position: relative;
+  align-self: end;
+  width: 100%;
+  height: clamp(200px, 44vh, 440px);
+  /* Füße und Räder stehen im Gras */
+  margin-bottom: -24px;
+}
+
+.landung__flugzeug {
+  position: absolute;
+  right: 4%;
+  bottom: 0;
+  width: clamp(170px, 26vw, 320px);
+  height: auto;
+}
+
+/* Anflug von links: sinken, aufsetzen, kurz hüpfen, ausrollen */
+.landung.kommt .landung__flugzeug {
+  animation: landen 2200ms linear both;
+}
+
+@keyframes landen {
+  0% { transform: translate(-85vw, -36vh) rotate(8deg); }
+  30% { transform: translate(-58vw, -24vh) rotate(7deg); }
+  55% { transform: translate(-34vw, -9vh) rotate(5deg); }
+  68% { transform: translate(-22vw, 0) rotate(0deg); }
+  74% { transform: translate(-15vw, -1.6vh) rotate(-1.5deg); }
+  80% { transform: translate(-10vw, 0) rotate(0deg); }
+  90% { transform: translate(-3vw, 0); }
+  100% { transform: none; }
+}
+
+/* Propeller dreht, solange das Flugzeug rollt */
+.landung.kommt .propeller {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: propeller 110ms linear 20;
+}
+
+@keyframes propeller {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.25); }
+}
+
+.herde {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 62%;
+  height: 100%;
+}
+
+.herden-kuh {
+  position: absolute;
+  aspect-ratio: 270 / 220;
+}
+
+.herden-kuh svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* hintere Reihe etwas kleiner und nur wenig höher – sie steht hinter der vorderen */
+.herden-kuh:nth-child(1) { left: 17%; bottom: 7%; width: 30%; z-index: 1; }
+.herden-kuh:nth-child(2) { left: 54%; bottom: 8%; width: 28%; z-index: 1; }
+.herden-kuh:nth-child(3) { left: 0%; bottom: 0; width: 36%; z-index: 2; }
+.herden-kuh:nth-child(4) { left: 33%; bottom: -1%; width: 38%; z-index: 2; }
+
+/* nacheinander von links hereinlaufen, nach der Landung */
+.landung.kommt .herden-kuh {
+  animation: herde-kommt 2600ms cubic-bezier(0.25, 0.6, 0.35, 1) both;
+  animation-delay: calc(2000ms + var(--i) * 450ms);
+}
+
+.landung.kommt .herden-kuh svg {
+  animation: kuh-schritt 320ms ease-in-out 8 alternate both;
+  animation-delay: calc(2000ms + var(--i) * 450ms);
+}
+
+@keyframes herde-kommt {
+  from { transform: translateX(-80vw); }
+  to { transform: none; }
+}
+
+@keyframes kuh-schritt {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4%); }
+}
+
+/* danach: grasen (Kopf senken) und Schwanz wedeln – jede Kuh in ihrem Takt */
+.herden-kuh .kuh__kopf {
+  transform-box: view-box;
+  transform-origin: 205px 112px;
+  animation: grasen var(--grasen, 5s) ease-in-out infinite;
+  animation-delay: var(--versatz, 0s);
+}
+
+.herden-kuh .kuh__schwanz {
+  transform-box: view-box;
+  transform-origin: 40px 96px;
+  animation: wedeln var(--wedeln, 1.8s) ease-in-out infinite alternate;
+  animation-delay: var(--versatz, 0s);
+}
+
+@keyframes grasen {
+  0%, 45%, 100% { transform: rotate(0deg); }
+  58%, 82% { transform: rotate(12deg) translateY(4px); }
+}
+
+@keyframes wedeln {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(9deg); }
+}
+
+/* ---------- Wiese und Knöpfe ---------- */
+
+.boden {
+  width: calc(100% + 2 * clamp(16px, 3vw, 40px));
+  height: 30px;
+  margin-bottom: clamp(16px, 3vh, 32px);
+}
+
+.knoepfe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 5vw, 64px);
+}
+
+.rund-knopf {
+  min-width: var(--touch);
+  min-height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.rund-knopf svg {
+  width: 100%;
+  height: auto;
+}
+
+.rund-knopf:active svg {
+  transform: translateY(3px);
+}
+
+.rund-knopf:disabled {
+  cursor: default;
+}
+
+.rund-knopf--gelesen,
+.rund-knopf--neu {
+  width: clamp(104px, 12vw, 136px);
+}
+
+.rund-knopf--nochmal {
+  width: clamp(68px, 7vw, 84px);
+}
+
+/* ---------- Kopfleiste ---------- */
+
+.vollbild-knopf[data-vollbild="an"] .vollbild-an,
+.vollbild-knopf:not([data-vollbild="an"]) .vollbild-aus {
+  display: none;
+}
+
+/* ---------- Hochformat ---------- */
+
+@media (max-aspect-ratio: 1/1) {
+  .flug {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+
+  .seil {
+    width: 0;
+    height: clamp(20px, 4vh, 40px);
+    border-top: 0;
+    border-left: var(--linie);
+  }
+
+  .flugzeug {
+    width: clamp(110px, 30vw, 180px);
+  }
+
+  .banner__silbe {
+    font-size: clamp(4.5rem, min(26vw, 18vh), 12rem);
+  }
+
+  .wolken {
+    max-width: 52vw;
+  }
+
+  .landung {
+    height: clamp(220px, 36vh, 420px);
+  }
+
+  .herde {
+    width: 70%;
+  }
+
+  .landung__flugzeug {
+    width: clamp(130px, 34vw, 240px);
+  }
+}
+
+/* sehr flach (Handy quer) */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  .leiste {
+    padding-block: 8px;
+  }
+
+  .boden {
+    margin-bottom: 8px;
+  }
+
+  .rund-knopf--gelesen,
+  .rund-knopf--neu {
+    width: 88px;
+  }
+
+  .rund-knopf--nochmal {
+    width: 64px;
+  }
+
+  .banner__silbe {
+    font-size: min(24vh, 9rem);
+  }
+}

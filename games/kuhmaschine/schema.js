@@ -5,6 +5,9 @@ export const SPIEL_ID = 'kuhmaschine';
 
 export const VOKALE = ['a', 'e', 'i', 'o', 'u', 'au', 'ei', 'eu', 'ie', 'ä', 'ö', 'ü', 'äu'];
 
+/** Anlaute zum Antippen im Elternbereich. "" = Silbe nur aus dem Vokal (z. B. "O-ma"). */
+export const ANLAUT_AUSWAHL = ['M', 'L', 'T', 'S', 'R', 'N', 'F', 'H', 'W', 'D', 'B', 'P', 'K', 'G', 'J', 'Z', 'Sch', ''];
+
 const ANLAUT = /^[A-ZÄÖÜ][a-zäöüß]{0,2}$/;
 const SILBE = /^[A-Za-zÄÖÜäöüß]{1,6}$/;
 const MAX_EINTRAEGE = 100;
@@ -34,6 +37,12 @@ export const felder = [
     titel: 'Wörter',
     hilfe: 'Silben mit Bindestrich trennen, 2 bis 4 Silben: Ma-ma, To-ma-te',
     beispiel: 'Ma-ma, To-ma-te',
+  },
+  {
+    name: 'flugsilben',
+    titel: 'Flugsilben (für den Silbenflug)',
+    hilfe: 'Die Silben aus der Flugzeug-Tabelle, genau wie auf dem Blatt geschrieben (auch doppelte). Freiwillig.',
+    beispiel: 'Ma, Lo, la, am, Ol',
   },
 ];
 
@@ -65,6 +74,7 @@ export function pruefeDaten(daten) {
   const vokale = pruefeListe(daten, 'vokale', fehler);
   const silben = pruefeListe(daten, 'silben', fehler);
   const woerter = pruefeListe(daten, 'woerter', fehler);
+  const flugsilben = pruefeListe(daten, 'flugsilben', fehler);
 
   for (const anlaut of anlaute) {
     if (!ANLAUT.test(anlaut)) {
@@ -84,6 +94,12 @@ export function pruefeDaten(daten) {
     }
   }
 
+  for (const silbe of new Set(flugsilben)) {
+    if (!SILBE.test(silbe)) {
+      fehler.push(`Flugsilbe "${silbe}": nur Buchstaben, höchstens 6 (z. B. "am" oder "Ma").`);
+    }
+  }
+
   for (const wort of woerter) {
     const teile = wort.split('-');
     if (teile.some((teil) => !SILBE.test(teil))) {
@@ -96,8 +112,8 @@ export function pruefeDaten(daten) {
   }
 
   const kombinierbar = silben.length > 0 || (anlaute.length > 0 && vokale.length > 0);
-  if (woerter.length === 0 && !kombinierbar) {
-    fehler.push('Das Set braucht Wörter, Silben oder Anlaute zusammen mit Vokalen – sonst hat die Maschine nichts zu zeigen.');
+  if (woerter.length === 0 && !kombinierbar && flugsilben.length === 0) {
+    fehler.push('Das Set braucht Wörter, Silben, Flugsilben oder Anlaute zusammen mit Vokalen – sonst gibt es nichts zu lesen.');
   }
 
   return fehler;

@@ -11,6 +11,12 @@
     "woerter": [
       "Lo-la", "Mo-mo", "La-ma", "Ma-ma", "Mo-la", "O-ma", "A-mo",
       "Lo-lo-mo", "La-ma-la", "Ma-lo-ma", "Mo-lo-la", "A-la-lo"
+    ],
+    "flugsilben": [
+      "Ma", "Lo", "La", "Ma", "mo", "ma", "la", "lo", "am", "om", "mo", "ma",
+      "la", "lo", "la", "Mo", "am", "Am", "Lo", "Al", "al", "ma", "Al", "Am",
+      "om", "Am", "lo", "Lo", "La", "am", "mo", "om", "Mo", "ma", "Ma", "ma",
+      "Al", "Lo", "ol", "Mo", "Ol", "Al", "Am", "al", "la", "Lo", "Al", "Mo"
     ]
   }
 }

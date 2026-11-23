@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 170">
+  <!-- Kachelbild Silbenflug: Flugzeug zieht ein Banner mit einer Silbe. Farben = Palette -->
+  <g stroke="#3b2a1f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="#86a95a" d="M0,150 C40,146 80,153 120,149 C160,145 200,152 240,148 L240,170 L0,170 Z"/>
+    <path fill="none" stroke="#9b8a7c" stroke-width="2" d="M184,124 C179,124 178,119 181,117 C181,113 186,111 189,113 C190,109 197,109 198,114 C202,113 205,117 202,120 C204,123 201,125 199,124 Z"/>
+    <path fill="none" stroke="#9b8a7c" stroke-width="2" d="M40,40 C35,40 34,35 37,33 C37,29 42,27 45,29 C46,25 53,25 54,30 C58,29 61,33 58,36 C60,39 57,41 55,40 Z"/>
+    <path fill="#fbf5e7" d="M24,62 L104,60 C110,60 112,63 112,68 L113,112 C113,117 110,119 105,119 L26,120 C21,120 18,117 18,112 L18,69 C18,64 20,62 24,62 Z"/>
+    <path fill="none" d="M113,90 L140,90"/>
+    <path fill="#d3e8ef" d="M146,88 L141,68 C140,65 143,64 145,66 L158,80 Z"/>
+    <path fill="#d3e8ef" d="M144,90 C143,82 155,78 170,78 L204,78 C217,78 225,83 225,90 C225,96 217,99 204,99 L162,99 C152,99 145,96 144,90 Z"/>
+    <path fill="#fbf5e7" d="M176,92 L194,91 L187,110 C186,112 182,112 181,110 Z"/>
+    <path fill="#9b8a7c" d="M230,72 C233,72 233,108 230,108 C227,108 227,72 230,72 Z"/>
+    <path fill="#3b2a1f" d="M224,90 C224,87 229,87 229,90 C229,93 224,93 224,90 Z"/>
+  </g>
+  <text x="65" y="104" fill="#3b2a1f" font-family="sans-serif" font-size="42" text-anchor="middle">Lo</text>
+</svg>

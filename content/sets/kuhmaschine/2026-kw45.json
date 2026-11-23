@@ -10,8 +10,14 @@
     "silben": ["Ma", "Mo", "Mi", "La", "Lo", "Li"],
     "woerter": [
       "Lo-la", "Ma-mi", "Mi-la", "O-ma", "I-mo", "Mi-mi", "Li-lo",
-      "Li-li", "Li-mo", "Ma-ma", "Mi-lo", "Ma-la", "A-li",
-      "Mi-la-mo-mi", "O-la-la-lo", "Mi-am-al-la"
+      "Li-li", "Li-mo", "Ma-ma", "Mi-lo", "Ma-la", "A-li", "Mi-la-mo-mi",
+      "O-la-la-lo", "Mi-am-al-la"
+    ],
+    "flugsilben": [
+      "Li", "Mi", "Mo", "Ma", "La", "al", "la", "Lo", "Om", "Mo", "Ma", "Mi",
+      "im", "mi", "am", "Li", "ma", "lo", "Al", "ma", "lo", "la", "il", "im",
+      "Im", "Ol", "Am", "la", "Ma", "Om", "La", "Ol", "li", "Im", "Am", "Al",
+      "Mi", "Lo", "mi", "am", "li", "ol", "al", "Li", "al", "Lo", "mi", "al"
     ]
   }
 }

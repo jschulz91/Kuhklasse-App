@@ -11,6 +11,12 @@
     "woerter": [
       "O-mi", "Li-sa", "Ma-ma", "Ma-mi", "Sa-lat", "O-ma", "A-mi",
       "Lo-la", "La-mas"
+    ],
+    "flugsilben": [
+      "Ta", "To", "Ti", "Sa", "So", "Si", "mi", "ma", "mo", "li", "la", "lo",
+      "Mo", "Ma", "Mi", "La", "Lo", "Li", "ti", "to", "ta", "so", "si", "sa",
+      "al", "so", "mi", "am", "to", "si", "As", "Ot", "Mo", "Im", "Li", "Sa",
+      "alt", "mos", "ist", "lat", "Ast", "Tim", "als", "los", "lam", "mol", "som", "til"
     ]
   }
 }

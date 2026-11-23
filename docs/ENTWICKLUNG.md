@@ -43,6 +43,8 @@ Wiederholen auswählbar.
    - **Vokale**: z. B. `a, e, i, o, u`
    - **Silben**: einzelne Silben vom Blatt, z. B. `Ma, Lo, Ti`
    - **Wörter**: Silben mit Bindestrich, 2 bis 4 Silben, z. B. `Ma-ma, To-ma-te`
+   - **Flugsilben** (freiwillig, für den Silbenflug): die Silben aus der Flugzeug-Tabelle,
+     genau wie auf dem Blatt geschrieben, auch doppelte, z. B. `Ma, lo, am, Ol`
 5. Fehler stehen direkt unter dem Formular. Solange es Fehler gibt, sind die Knöpfe gesperrt.
 6. **Im Spiel ausprobieren** zeigt das Set sofort in der Maschine, ohne etwas zu speichern.
    Oben erscheint „Vorschau“ mit dem Knopf **Beenden**.
@@ -68,7 +70,8 @@ also `2026-kw07.json`):
     "anlaute": ["M", "L", "T"],
     "vokale": ["a", "e", "i", "o", "u"],
     "silben": ["Ma", "Lo", "Ti"],
-    "woerter": ["Ma-ma", "To-ma-te"]
+    "woerter": ["Ma-ma", "To-ma-te"],
+    "flugsilben": ["Ma", "Lo", "ma", "am", "Ol", "lo"]
   }
 }
 ```
@@ -111,6 +114,17 @@ lässt sich die Uhr auf 0 stellen.
 
 **Bitte keine Fotos oder Scans von Arbeitsblättern ins Repo legen.** Das Set enthält nur
 die Silben und Wörter.
+
+---
+
+### Silbenflug nutzt dieselben Sets
+
+Der Silbenflug liest die Leseblatt-Sets aus `content/sets/kuhmaschine/`, es gibt also nur
+ein Set pro Leseblatt. Er nimmt `flugsilben`. Fehlt das Feld, nimmt er `silben`, und ohne
+Silben kombiniert er `anlaute` und `vokale`. Für „Zufall“ hat er eigene Buchstaben im
+Elternbereich und bildet daraus Silben wie „Ma“, „ma“, „am“ und „Am“. Den Set-Editor gibt es
+in beiden Spielen, er legt dasselbe Set an. Ein Set darf auch nur `flugsilben` enthalten,
+die Kuhmaschine nimmt dann ihre eigenen Buchstaben.
 
 ---
 
@@ -234,6 +248,7 @@ einer Webseite erlaubt.
 ```
 index.html                        Startseite: Fächer mit Spiel-Kacheln
 games/kuhmaschine/                index.html, game.js, game.css, schema.js
+games/silbenflug/                 index.html, game.js, game.css (Sets aus kuhmaschine)
 games/tripel/                     index.html, game.js, game.css, karten.js
 shared/                           gemeinsame Bausteine (siehe oben)
 content/faecher.json              Fächer (Reihenfolge, Farbe)

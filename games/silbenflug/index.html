@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fbf5e7">
+  <title>Silbenflug · Kuhklasse</title>
+  <link rel="icon" href="../../assets/svg/kachel-silbenflug.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <link rel="stylesheet" href="game.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <header class="leiste">
+    <a class="icon-knopf" href="../../" aria-label="Zur Startseite">
+      <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path class="f-creme" d="M5,36 L6,17 L20,5 L34,16 L35,36 Z"/>
+        <path class="f-wiese" d="M14,36 L14,24 L26,24 L26,36 Z"/>
+        <path class="f-keine" d="M14,24 L26,36 M26,24 L14,36"/>
+      </svg>
+    </a>
+
+    <!-- Fortschritt: eine Wolke pro Flug -->
+    <p class="wolken" id="wolken" role="img" aria-label="0 von 20 Flügen"></p>
+
+    <div class="leiste__rechts">
+      <button type="button" class="icon-knopf vollbild-knopf" id="vollbild" aria-label="Vollbild" aria-pressed="false">
+        <svg class="strich vollbild-an" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M6,15 L6,6 L15,6 M25,6 L34,6 L34,15 M34,25 L34,34 L25,34 M15,34 L6,34 L6,25"/>
+        </svg>
+        <svg class="strich vollbild-aus" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M15,6 L15,15 L6,15 M25,6 L25,15 L34,15 M34,25 L25,25 L25,34 M6,25 L15,25 L15,34"/>
+        </svg>
+      </button>
+      <button type="button" class="eltern-knopf" id="eltern-auf" aria-controls="eltern" aria-expanded="false">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M5,12 L35,12 M5,28 L35,28"/>
+          <path class="f-creme" d="M10,12 C10,7 18,7 18,12 C18,17 10,17 10,12 Z"/>
+          <path class="f-creme" d="M22,28 C22,23 30,23 30,28 C30,33 22,33 22,28 Z"/>
+        </svg>
+        Eltern
+      </button>
+    </div>
+  </header>
+
+  <main class="himmel">
+    <h1 class="nur-vorlesen">Silbenflug</h1>
+
+    <!-- Flug: Banner mit Silbe, Seil, Flugzeug (fliegt von links nach rechts) -->
+    <div class="luftraum">
+      <div class="flug" id="flug" aria-live="polite">
+        <div class="banner"><span class="banner__silbe" id="silbe"></span></div>
+        <div class="seil" aria-hidden="true"></div>
+        <svg class="flugzeug strich" viewBox="0 0 170 100" aria-hidden="true" focusable="false">
+          <path class="f-himmel" d="M16,52 L8,20 C7,15 12,13 16,16 L38,36 Z"/>
+          <path class="f-himmel" d="M14,54 C12,41 32,35 58,35 L118,35 C140,35 154,43 154,54 C154,63 141,68 118,68 L38,68 C24,68 15,62 14,54 Z"/>
+          <path class="f-creme" d="M72,42 L80,42 C82,42 83,43 83,45 L83,50 C83,52 82,53 80,53 L72,53 C70,53 69,52 69,50 L69,45 C69,43 70,42 72,42 Z"/>
+          <path class="f-creme" d="M92,42 L100,42 C102,42 103,43 103,45 L103,50 C103,52 102,53 100,53 L92,53 C90,53 89,52 89,50 L89,45 C89,43 90,42 92,42 Z"/>
+          <path class="f-creme" d="M112,42 L120,42 C122,42 123,43 123,45 L123,50 C123,52 122,53 120,53 L112,53 C110,53 109,52 109,50 L109,45 C109,43 110,42 112,42 Z"/>
+          <path class="f-creme" d="M74,58 L106,57 L93,88 C91,92 85,92 83,88 Z"/>
+          <path class="f-fleck-hell" d="M161,26 C166,26 166,82 161,82 C156,82 156,26 161,26 Z"/>
+          <path class="f-fleck" d="M152,54 C152,49 160,49 160,54 C160,59 152,59 152,54 Z"/>
+        </svg>
+      </div>
+
+      <!-- Landung nach allen Flügen: Flugzeug landet, dann kommt die Kuhherde -->
+      <div class="landung" id="landung" hidden>
+        <div class="herde" id="herde"></div>
+        <svg class="landung__flugzeug strich" viewBox="0 0 170 100" aria-hidden="true" focusable="false">
+          <path class="f-creme" d="M50,66 L46,88 M110,66 L114,88"/>
+          <path class="f-himmel" d="M16,52 L8,20 C7,15 12,13 16,16 L38,36 Z"/>
+          <path class="f-himmel" d="M14,54 C12,41 32,35 58,35 L118,35 C140,35 154,43 154,54 C154,63 141,68 118,68 L38,68 C24,68 15,62 14,54 Z"/>
+          <path class="f-creme" d="M72,42 L80,42 C82,42 83,43 83,45 L83,50 C83,52 82,53 80,53 L72,53 C70,53 69,52 69,50 L69,45 C69,43 70,42 72,42 Z"/>
+          <path class="f-creme" d="M92,42 L100,42 C102,42 103,43 103,45 L103,50 C103,52 102,53 100,53 L92,53 C90,53 89,52 89,50 L89,45 C89,43 90,42 92,42 Z"/>
+          <path class="f-creme" d="M112,42 L120,42 C122,42 123,43 123,45 L123,50 C123,52 122,53 120,53 L112,53 C110,53 109,52 109,50 L109,45 C109,43 110,42 112,42 Z"/>
+          <path class="f-creme" d="M74,58 L106,57 L93,84 C91,88 85,88 83,84 Z"/>
+          <path class="f-fleck-hell propeller" d="M161,26 C166,26 166,82 161,82 C156,82 156,26 161,26 Z"/>
+          <path class="f-fleck" d="M152,54 C152,49 160,49 160,54 C160,59 152,59 152,54 Z"/>
+          <path class="f-fleck" d="M40,90 C40,84 52,84 52,90 C52,96 40,96 40,90 Z"/>
+          <path class="f-fleck" d="M108,90 C108,84 120,84 120,90 C120,96 108,96 108,90 Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <svg class="boden strich" viewBox="0 0 1000 30" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path class="f-wiese" d="M0,10 C80,6 150,13 240,9 C330,5 410,12 500,8 C600,4 680,12 770,9 C860,6 930,11 1000,8 L1000,30 L0,30 Z"/>
+    </svg>
+
+    <div class="knoepfe">
+      <!-- gelesen: Flug zählt -->
+      <button type="button" class="rund-knopf rund-knopf--gelesen" id="gelesen" aria-label="Gelesen, nächster Flug">
+        <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <path class="f-wiese strich" d="M60,6 C90,5 115,28 114,60 C114,90 90,115 60,114 C29,115 6,91 6,60 C6,29 30,6 60,6 Z"/>
+          <path fill="none" stroke="var(--fleck)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" d="M35,62 L52,79 L86,42"/>
+          <path fill="none" stroke="var(--creme)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" d="M35,62 L52,79 L86,42"/>
+        </svg>
+      </button>
+
+      <!-- nochmal: Silbe kommt später wieder, zählt nicht -->
+      <button type="button" class="rund-knopf rund-knopf--nochmal" id="nochmal" aria-label="Nochmal, Silbe kommt später wieder">
+        <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <path class="f-creme strich" d="M60,6 C90,5 115,28 114,60 C114,90 90,115 60,114 C29,115 6,91 6,60 C6,29 30,6 60,6 Z"/>
+          <path fill="none" stroke="var(--fleck)" stroke-width="7" stroke-linecap="round" d="M82,44 A26,26 0 1 0 86,66"/>
+          <path class="f-fleck" d="M76,30 L92,44 L72,50 Z"/>
+        </svg>
+      </button>
+
+      <!-- nach der Landung -->
+      <button type="button" class="rund-knopf rund-knopf--neu" id="neue-runde" aria-label="Noch eine Runde fliegen" hidden>
+        <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <path class="f-himmel strich" d="M60,6 C90,5 115,28 114,60 C114,90 90,115 60,114 C29,115 6,91 6,60 C6,29 30,6 60,6 Z"/>
+          <g class="strich">
+            <path class="f-creme" d="M30,62 C29,55 39,51 52,51 L80,51 C91,51 98,55 98,61 C98,66 91,69 80,69 L42,69 C34,69 30,66 30,62 Z"/>
+            <path class="f-creme" d="M31,60 L26,40 C26,37 29,36 31,38 L44,51 Z"/>
+            <path class="f-creme" d="M58,64 L74,63 L67,80 C66,82 63,82 62,80 Z"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <aside class="eltern" id="eltern" aria-labelledby="eltern-titel" hidden>
+    <div class="eltern__kopf">
+      <h2 id="eltern-titel">Elternbereich</h2>
+      <button type="button" class="eltern__zu" id="eltern-zu" aria-label="Elternbereich schließen">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M10,10 L30,30 M30,10 L10,30"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="eltern__abschnitt">
+      <h3>So geht der Silbenflug</h3>
+      <p class="hinweis">Wie die Flugzeug-Tabelle auf dem Leseblatt: Das Kind liest die Silbe laut vor.
+        Danach tippen Sie auf den grünen Haken. Klappt es noch nicht, tippen Sie auf den Pfeil im Kreis.
+        Die Silbe kommt dann ein paar Flüge später noch einmal und zählt noch nicht.</p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Woche</h3>
+      <label class="feld">
+        <span>Welches Leseblatt?</span>
+        <select id="woche"></select>
+      </label>
+      <p class="hinweis" id="woche-info"></p>
+      <p class="warnung" id="woche-fehler" hidden></p>
+      <div class="warnung" id="vorschau-hinweis" hidden>
+        <p>Gerade läuft die Vorschau aus dem Set-Editor: <span id="vorschau-titel"></span></p>
+        <div class="knopf-reihe">
+          <button type="button" class="knopf-text" id="vorschau-ende">Vorschau beenden</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="eltern__abschnitt" id="buchstaben-abschnitt">
+      <h3>Buchstaben für Zufall</h3>
+      <p class="hinweis">Nur antippen, was schon gelernt ist. Daraus entstehen Silben wie „Ma“, „ma“, „am“ und „Am“.</p>
+      <fieldset>
+        <legend>Anlaute</legend>
+        <div class="chips" id="anlaute"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Vokale</legend>
+        <div class="chips" id="vokale"></div>
+      </fieldset>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Flüge pro Runde</h3>
+      <div class="wahl">
+        <label><input type="radio" name="fluege" value="10"><span>10</span></label>
+        <label><input type="radio" name="fluege" value="20"><span>20</span></label>
+        <label><input type="radio" name="fluege" value="30"><span>30</span></label>
+      </div>
+      <div class="knopf-reihe">
+        <button type="button" class="knopf-text" id="runde-neu">Runde neu starten</button>
+      </div>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Schrift</h3>
+      <div class="wahl">
+        <label><input type="radio" name="schrift" value="druck"><span>Druckschrift</span></label>
+        <label><input type="radio" name="schrift" value="grund"><span>Grundschrift</span></label>
+      </div>
+      <p class="warnung" id="schrift-hinweis" hidden>Die Datei assets/fonts/grundschrift.woff2 fehlt noch. Bis sie da ist, wird Druckschrift gezeigt.</p>
+    </section>
+
+    <details class="eltern__abschnitt">
+      <summary>Neues Leseblatt-Set anlegen</summary>
+      <p class="hinweis">Ein Set gilt für ein Leseblatt und wird von Silbenflug und Kuhmaschine gemeinsam genutzt. Für den Silbenflug zählt das Feld „Flugsilben“.</p>
+      <div id="editor"></div>
+    </details>
+  </aside>
+</body>
+</html>

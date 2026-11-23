@@ -9,6 +9,14 @@
       "sets": true
     },
     {
+      "id": "silbenflug",
+      "titel": "Silbenflug",
+      "fach": "lesen",
+      "pfad": "games/silbenflug/",
+      "bild": "assets/svg/kachel-silbenflug.svg",
+      "sets": false
+    },
+    {
       "id": "tripel",
       "titel": "Tripel",
       "fach": "mathe",

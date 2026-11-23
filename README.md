@@ -21,6 +21,15 @@ auf der Maschine zählt die gelesenen Wörter bis 20.
 Die Silben kommen entweder vom Leseblatt der Woche oder werden zufällig aus Buchstaben
 gebaut, die das Kind schon kennt. Bis zu vier Silben pro Wort sind möglich.
 
+### Silbenflug (Lesen)
+
+Wie die Flugzeug-Tabelle auf den Leseblättern: Ein kleines Flugzeug zieht ein Banner mit
+**einer Silbe** herein, das Kind liest sie laut vor. Die Begleitperson tippt auf den grünen
+Haken, dann fliegt das Flugzeug weiter und bringt die nächste Silbe. Klappt eine Silbe noch
+nicht, kommt sie mit dem Pfeil im Kreis ein paar Flüge später noch einmal. Wolken oben zeigen,
+wie viele Flüge geschafft sind. Nach 20 Flügen landet das Flugzeug auf der Wiese, und eine Kuh
+wartet schon.
+
 ### Tripel (Mathe)
 
 Übt das Zerlegen im Zahlenraum bis 10 mit Tripel-Karten: Oben steht der „Boss“, unten zwei

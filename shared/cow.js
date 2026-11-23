@@ -169,14 +169,17 @@ export function erzeugeKuh(name = '', zufall = Math.random) {
     <clipPath id="${id}-koerper"><path d="${KOERPER}"/></clipPath>
     <clipPath id="${id}-kopf"><path d="${KOPF}"/></clipPath>
   </defs>
-  <path class="f-keine" d="M40,96 C27,104 23,122 27,140"/>
-  <path class="${farbe.quaste}" d="${klecks(zufall, 27, 146, 6, 8, 0.2, 6)}"/>
+  <g class="kuh__schwanz">
+    <path class="f-keine" d="M40,96 C27,104 23,122 27,140"/>
+    <path class="${farbe.quaste}" d="${klecks(zufall, 27, 146, 6, 8, 0.2, 6)}"/>
+  </g>
   ${zeichneBeine(beineHinten)}
   <path class="${farbe.fell}" d="${KOERPER}"/>
   <g clip-path="url(#${id}-koerper)">${flecken}</g>
   <path class="f-keine" d="${KOERPER}"/>
   <path class="f-schnauze" d="${EUTER}"/>
   ${zeichneBeine(beineVorn)}
+  <g class="kuh__kopf">
   ${HOERNER[hoerner]}
   <path class="${farbe.fell}" d="${OHR_L}"/>
   <path class="${farbe.fell}" d="${OHR_R}"/>
@@ -190,5 +193,6 @@ export function erzeugeKuh(name = '', zufall = Math.random) {
   <path class="f-keine" d="M205,119 Q212,123 219,119"/>
   ${glockeSvg}
   ${hut(hutArt, zufall)}
+  </g>
 </svg>`;
 }

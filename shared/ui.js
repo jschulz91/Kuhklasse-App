@@ -76,3 +76,37 @@ export function el(tag, eigenschaften = {}, ...kinder) {
   }
   return knoten;
 }
+
+/**
+ * Knöpfe zum An- und Abwählen (z. B. Buchstaben). Der letzte gewählte Wert bleibt immer an.
+ * @param {HTMLElement} behaelter
+ * @param {{ alle: string[], holen: () => string[], setzen: (werte: string[]) => void,
+ *           beschriftung?: (wert: string) => string, beiAenderung?: () => void }} optionen
+ */
+export function baueAuswahlChips(behaelter, { alle, holen, setzen, beschriftung = (x) => x, beiAenderung }) {
+  const knoepfe = alle.map((wert) =>
+    el('button', { type: 'button', class: 'chip', dataset: { wert }, text: beschriftung(wert) }),
+  );
+
+  const aktualisiere = () => {
+    const aktiv = holen();
+    for (const knopf of knoepfe) {
+      const an = aktiv.includes(knopf.dataset.wert);
+      knopf.setAttribute('aria-pressed', String(an));
+      knopf.disabled = an && aktiv.length === 1;
+    }
+  };
+
+  behaelter.replaceChildren(...knoepfe);
+  behaelter.addEventListener('click', (ereignis) => {
+    const knopf = ereignis.target.closest('.chip');
+    if (!knopf || knopf.disabled) return;
+    const aktiv = new Set(holen());
+    if (aktiv.has(knopf.dataset.wert)) aktiv.delete(knopf.dataset.wert);
+    else aktiv.add(knopf.dataset.wert);
+    setzen(alle.filter((wert) => aktiv.has(wert)));
+    aktualisiere();
+    beiAenderung?.();
+  });
+  aktualisiere();
+}

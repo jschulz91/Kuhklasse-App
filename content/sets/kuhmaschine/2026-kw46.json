@@ -12,6 +12,12 @@
       "O-mi", "Li-sa", "Mi-lo", "Si-mi", "Sa-la-mi", "Li-mo", "Li-li",
       "Si-ma", "Ma-ma", "A-mi", "Lo-la", "Ma-mi", "li-la", "La-mas",
       "Si-la-mi-so", "So-ma-si", "Mi-sa-mi-la", "La-mi-so-mi"
+    ],
+    "flugsilben": [
+      "Si", "mo", "la", "sa", "Ma", "om", "so", "li", "Mo", "As", "Am", "ol",
+      "So", "im", "Li", "ma", "Lo", "Is", "Mi", "am", "al", "os", "mo", "si",
+      "La", "si", "Sa", "mo", "Si", "Im", "Al", "is", "la", "so", "Mi", "lo",
+      "so", "sa", "Am", "al", "im", "si", "al", "Li", "Om", "La", "Ol", "li"
     ]
   }
 }

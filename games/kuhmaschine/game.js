@@ -4,12 +4,10 @@ import { ladeJson, ladeSet, ladeSetListe } from '../../shared/content.js';
 import { allgemein, einstellungen, grundschriftVorhanden, wendeSchriftAn } from '../../shared/settings.js';
 import { erzeugeKuh, erzeugeNamensschild } from '../../shared/cow.js';
 import { baueSetEditor } from '../../shared/set-editor.js';
-import { el, richteElternbereichEin, richteVollbildEin } from '../../shared/ui.js';
-import { SPIEL_ID, VOKALE, felder, pruefeDaten } from './schema.js';
+import { baueAuswahlChips, el, richteElternbereichEin, richteVollbildEin } from '../../shared/ui.js';
+import { ANLAUT_AUSWAHL as ANLAUTE, SPIEL_ID, VOKALE, felder, pruefeDaten } from './schema.js';
 import { zeigeHinweisBeimErstenBesuch } from '../../shared/hinweis.js';
 
-// "" = Silbe nur aus dem Vokal (z. B. "O-ma")
-const ANLAUTE = ['M', 'L', 'T', 'S', 'R', 'N', 'F', 'H', 'W', 'D', 'B', 'P', 'K', 'G', 'J', 'Z', 'Sch', ''];
 const ZUFALL = 'zufall';
 const NEUESTE = 'auto';
 const UHR_MAX = 20; // die Zähluhr zählt gelesene Wörter von 0 bis 20, dann von vorne
@@ -112,13 +110,16 @@ function quelle() {
 
 /** Was die aktuelle Quelle hergibt: Wörter vom Blatt und Silben zum Kombinieren. */
 function vorrat() {
+  const zufall = () => ({ woerter: [], silben: kreuze(einst.get('anlaute'), einst.get('vokale')) });
   const set = quelle();
-  if (!set) return { woerter: [], silben: kreuze(einst.get('anlaute'), einst.get('vokale')) };
+  if (!set) return zufall();
   const daten = set.daten;
-  return {
+  const ergebnis = {
     woerter: daten.woerter ?? [],
     silben: daten.silben?.length ? daten.silben : kreuze(daten.anlaute ?? [], daten.vokale ?? []),
   };
+  // Set nur mit Flugsilben (für den Silbenflug): dann eigene Buchstaben nehmen
+  return ergebnis.woerter.length || ergebnis.silben.length ? ergebnis : zufall();
 }
 
 /** Länge der längsten Silbe, die vorkommen kann – bestimmt die Schriftgröße. */
@@ -129,7 +130,7 @@ function laengsteSilbe({ woerter, silben }) {
 
 function neueSilben() {
   const { woerter, silben } = vorrat();
-  if (!quelle()) return kombiniere(silben);
+  if (!quelle() || woerter.length === 0) return kombiniere(silben);
   const inhalt = einst.get('inhalt');
 
   let nimmWort;
@@ -299,33 +300,16 @@ function aktualisiereElternbereich() {
   }
 }
 
-function baueChips(behaelter, alle, schluessel, beschriftung = (x) => x) {
-  const knoepfe = alle.map((wert) =>
-    el('button', { type: 'button', class: 'chip', dataset: { wert }, text: beschriftung(wert) }),
-  );
-
-  const aktualisiere = () => {
-    const aktiv = einst.get(schluessel);
-    for (const knopf of knoepfe) {
-      const an = aktiv.includes(knopf.dataset.wert);
-      knopf.setAttribute('aria-pressed', String(an));
-      // der letzte gewählte Buchstabe bleibt an – sonst gäbe es keine Silben
-      knopf.disabled = an && aktiv.length === 1;
-    }
-  };
-
-  behaelter.replaceChildren(...knoepfe);
-  behaelter.addEventListener('click', (ereignis) => {
-    const knopf = ereignis.target.closest('.chip');
-    if (!knopf || knopf.disabled) return;
-    const aktiv = new Set(einst.get(schluessel));
-    if (aktiv.has(knopf.dataset.wert)) aktiv.delete(knopf.dataset.wert);
-    else aktiv.add(knopf.dataset.wert);
-    einst.set(schluessel, alle.filter((wert) => aktiv.has(wert)));
-    aktualisiere();
-    if (!quelle()) neuesWort({ mitBewegung: false });
+function baueChips(behaelter, alle, schluessel, beschriftung) {
+  baueAuswahlChips(behaelter, {
+    alle,
+    holen: () => einst.get(schluessel),
+    setzen: (werte) => einst.set(schluessel, werte),
+    beschriftung,
+    beiAenderung: () => {
+      if (!quelle()) neuesWort({ mitBewegung: false });
+    },
   });
-  aktualisiere();
 }
 
 function verbindeAuswahl(name, beiAenderung) {
