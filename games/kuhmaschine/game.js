@@ -6,6 +6,7 @@ import { erzeugeKuh, erzeugeNamensschild } from '../../shared/cow.js';
 import { baueSetEditor } from '../../shared/set-editor.js';
 import { el, richteElternbereichEin, richteVollbildEin } from '../../shared/ui.js';
 import { SPIEL_ID, VOKALE, felder, pruefeDaten } from './schema.js';
+import { zeigeHinweisBeimErstenBesuch } from '../../shared/hinweis.js';
 
 // "" = Silbe nur aus dem Vokal (z. B. "O-ma")
 const ANLAUTE = ['M', 'L', 'T', 'S', 'R', 'N', 'F', 'H', 'W', 'D', 'B', 'P', 'K', 'G', 'J', 'Z', 'Sch', ''];
@@ -416,6 +417,7 @@ function richteEditorEin() {
 
 async function start() {
   wendeSchriftAn(allg.get('schrift'));
+  zeigeHinweisBeimErstenBesuch();
   richteVollbildEin($('vollbild'));
   richteElternbereichEin({ oeffner: $('eltern-auf'), leiste: $('eltern'), schliesser: $('eltern-zu') });
   richteEinstellungenEin();

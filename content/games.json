@@ -7,6 +7,14 @@
       "pfad": "games/kuhmaschine/",
       "bild": "assets/svg/kachel-kuhmaschine.svg",
       "sets": true
+    },
+    {
+      "id": "tripel",
+      "titel": "Tripel",
+      "fach": "mathe",
+      "pfad": "games/tripel/",
+      "bild": "assets/svg/kachel-tripel.svg",
+      "sets": false
     }
   ]
 }

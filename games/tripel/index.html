@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fbf5e7">
+  <title>Tripel · Kuhklasse</title>
+  <link rel="icon" href="../../assets/svg/kachel-tripel.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <link rel="stylesheet" href="game.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <header class="leiste">
+    <a class="icon-knopf" href="../../" aria-label="Zur Startseite">
+      <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path class="f-creme" d="M5,36 L6,17 L20,5 L34,16 L35,36 Z"/>
+        <path class="f-wiese" d="M14,36 L14,24 L26,24 L26,36 Z"/>
+        <path class="f-keine" d="M14,24 L26,36 M26,24 L14,36"/>
+      </svg>
+    </a>
+
+    <p class="statistik" id="statistik" aria-live="polite">
+      <span class="statistik__teil">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-wiese" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>
+          <path class="f-keine" style="stroke: var(--creme); stroke-width: 4" d="M12,21 L18,27 L28,14"/>
+        </svg>
+        <span id="anzahl-richtig">0</span>
+        <span class="nur-vorlesen">richtig</span>
+      </span>
+      <span class="statistik__teil statistik__teil--leise">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-creme" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>
+          <path class="f-keine" d="M14,14 L26,26 M26,14 L14,26"/>
+        </svg>
+        <span id="anzahl-falsch">0</span>
+        <span class="nur-vorlesen">falsch</span>
+      </span>
+    </p>
+
+    <div class="leiste__rechts">
+      <button type="button" class="icon-knopf vollbild-knopf" id="vollbild" aria-label="Vollbild" aria-pressed="false">
+        <svg class="strich vollbild-an" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M6,15 L6,6 L15,6 M25,6 L34,6 L34,15 M34,25 L34,34 L25,34 M15,34 L6,34 L6,25"/>
+        </svg>
+        <svg class="strich vollbild-aus" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M15,6 L15,15 L6,15 M25,6 L25,15 L34,15 M34,25 L25,25 L25,34 M6,25 L15,25 L15,34"/>
+        </svg>
+      </button>
+      <button type="button" class="eltern-knopf" id="eltern-auf" aria-controls="eltern" aria-expanded="false">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M5,12 L35,12 M5,28 L35,28"/>
+          <path class="f-creme" d="M10,12 C10,7 18,7 18,12 C18,17 10,17 10,12 Z"/>
+          <path class="f-creme" d="M22,28 C22,23 30,23 30,28 C30,33 22,33 22,28 Z"/>
+        </svg>
+        Eltern
+      </button>
+    </div>
+  </header>
+
+  <main class="tripel-buehne">
+    <h1 class="nur-vorlesen">Tripel</h1>
+
+    <div class="karten-platz">
+      <div class="kuh-gucken" id="kuh-gucken" aria-hidden="true"></div>
+      <div class="karte" id="karte" data-farbe="rosa" role="group" aria-label="Tripel-Karte">
+        <div class="karte__feld karte__feld--boss" data-position="boss"><span></span></div>
+        <div class="karte__feld karte__feld--links" data-position="links"><span></span></div>
+        <div class="karte__feld karte__feld--rechts" data-position="rechts"><span></span></div>
+      </div>
+    </div>
+
+    <div class="antwort-bereich">
+      <div class="antworten" id="antworten" role="group" aria-label="Welche Zahl fehlt?"></div>
+      <button type="button" class="weiter-knopf" id="weiter" aria-label="Nächste Karte" data-sichtbar="nein">
+        <svg viewBox="0 0 120 80" aria-hidden="true" focusable="false">
+          <path class="f-himmel strich" d="M8,40 C8,18 22,8 44,8 L82,8 C104,8 112,20 112,40 C112,62 102,72 82,72 L44,72 C22,72 8,62 8,40 Z"/>
+          <path fill="none" stroke="var(--fleck)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" d="M36,40 L82,40 M66,24 L84,40 L66,56"/>
+          <path fill="none" stroke="var(--creme)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M36,40 L82,40 M66,24 L84,40 L66,56"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <aside class="eltern" id="eltern" aria-labelledby="eltern-titel" hidden>
+    <div class="eltern__kopf">
+      <h2 id="eltern-titel">Elternbereich</h2>
+      <button type="button" class="eltern__zu" id="eltern-zu" aria-label="Elternbereich schließen">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M10,10 L30,30 M30,10 L10,30"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="eltern__abschnitt">
+      <h3>Welche Karten?</h3>
+      <p class="hinweis">Nur die Farben antippen, die gerade geübt werden.</p>
+      <div class="farbwahl" id="farbwahl"></div>
+      <p class="hinweis" id="karten-anzahl"></p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Was fehlt?</h3>
+      <div class="wahl">
+        <label><input type="radio" name="fehlt" value="gemischt"><span>Gemischt</span></label>
+        <label><input type="radio" name="fehlt" value="unten"><span>Eine Zahl unten</span></label>
+        <label><input type="radio" name="fehlt" value="boss"><span>Der Boss</span></label>
+      </div>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Antworten zur Auswahl</h3>
+      <div class="wahl">
+        <label><input type="radio" name="antworten" value="3"><span>3</span></label>
+        <label><input type="radio" name="antworten" value="4"><span>4</span></label>
+        <label><input type="radio" name="antworten" value="10"><span>Alle 1–10</span></label>
+      </div>
+      <p class="hinweis">Falsch beantwortete Karten kommen ein paar Karten später noch einmal.</p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Diese Runde</h3>
+      <p class="hinweis" id="runde-info"></p>
+      <div class="knopf-reihe">
+        <button type="button" class="knopf-text" id="neue-runde">Neue Runde starten</button>
+      </div>
+    </section>
+
+    <details class="eltern__abschnitt">
+      <summary>So funktionieren Tripel-Karten</summary>
+      <div class="anleitung">
+        <p>Die obere, größte Zahl ist der <strong>Boss</strong>. Die beiden Zahlen unten ergeben zusammen den Boss. Auf der Karte fehlt immer eine der drei Zahlen.</p>
+        <p>Aus einem Tripel lassen sich sechs Aufgaben bilden, z. B. mit 9, 5 und 4:</p>
+        <p class="anleitung__aufgaben">5 + 4 = 9 · 4 + 5 = 9 · 9 = 4 + 5 · 9 = 5 + 4 · 9 − 5 = 4 · 9 − 4 = 5</p>
+        <p>Minus geht nur vom Boss aus („nur dem Boss kann man was klauen“).</p>
+        <p><strong>Tripel sprechen:</strong> „Wie viel fehlt von der 9 bis zur 10? Von der 9 bis zur 10 fehlt 1.“</p>
+        <p><strong>Tripel springen:</strong> erst den Boss nennen und mit beiden Beinen springen, dann links und rechts mit je einem Bein.</p>
+        <p><strong>Vertiefung:</strong> Nach der Lösung eine Plus- oder Minusaufgabe dazu bilden lassen.</p>
+        <ul class="anleitung__farben" id="farb-liste"></ul>
+      </div>
+    </details>
+  </aside>
+</body>
+</html>

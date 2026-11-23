@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 170">
+  <!-- Kachelbild Tripel: rosa Karte, eine Kuh guckt dahinter hervor. Farben = Palette + Kartenfarbe rosa -->
+  <g stroke="#3b2a1f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="#fbf5e7" d="M150,40 C150,24 182,22 184,40 C186,50 184,58 182,64 L152,64 C150,58 149,50 150,40 Z"/>
+    <path fill="#fbf5e7" d="M152,44 C142,38 134,40 132,46 C138,52 146,52 152,50 Z"/>
+    <path fill="#fbf5e7" d="M182,44 C192,38 200,40 202,46 C196,52 188,52 182,50 Z"/>
+    <path fill="#fbf5e7" d="M156,30 C152,24 152,19 155,15 C159,18 161,23 162,28 Z"/>
+    <path fill="#fbf5e7" d="M178,30 C182,24 182,19 179,15 C175,18 173,23 172,28 Z"/>
+    <path fill="#3b2a1f" stroke="none" d="M166,30 C174,29 181,34 181,42 C175,45 168,43 164,38 C162,34 163,31 166,30 Z"/>
+    <path fill="none" d="M150,40 C150,24 182,22 184,40 C186,50 184,58 182,64 L152,64 C150,58 149,50 150,40 Z"/>
+    <path fill="#3b2a1f" stroke="none" d="M157,44 C157,41 162,41 162,44 C162,48 157,48 157,44 Z"/>
+    <path fill="#fbf5e7" stroke="none" d="M172,44 C172,41 177,41 177,44 C177,48 172,48 172,44 Z"/>
+    <path fill="#f0d9cf" d="M148,62 C146,74 154,80 167,80 C180,80 188,74 186,62 C178,56 156,56 148,62 Z"/>
+    <path fill="#f3cbd6" d="M30,60 C30,54 34,52 40,52 L200,51 C206,51 210,54 210,60 L211,150 C211,156 207,159 201,159 L40,160 C34,160 30,157 30,151 Z"/>
+    <path fill="none" stroke-width="2" d="M48,66 L193,65 L194,145 L48,146 Z M48,102 L194,101 M121,102 L121,146"/>
+    <path fill="none" stroke-dasharray="6 6" d="M139,110 L177,110 L177,138 L139,138 Z"/>
+  </g>
+  <g fill="#3b2a1f" font-family="sans-serif" font-size="30" text-anchor="middle">
+    <text x="121" y="95">10</text>
+    <text x="85" y="136">9</text>
+  </g>
+</svg>

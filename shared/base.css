@@ -398,6 +398,64 @@ button {
   overflow-wrap: anywhere;
 }
 
+/* ---------- Begrüßungshinweis ---------- */
+
+.hinweis {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: var(--luft-4) var(--luft-4) var(--luft-3);
+  border: var(--linie);
+  border-radius: var(--rund-gross);
+  background: var(--creme);
+  color: var(--fleck);
+  font-size: 1.05rem;
+}
+
+.hinweis::backdrop {
+  background: color-mix(in srgb, var(--fleck) 45%, transparent);
+}
+
+.hinweis h2 {
+  margin-bottom: var(--luft-2);
+  font-size: 1.6rem;
+}
+
+.hinweis p + p {
+  margin-top: 12px;
+}
+
+.hinweis__merken {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: var(--luft-3);
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.hinweis__merken input {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--wiese);
+}
+
+.hinweis .knopf-reihe {
+  justify-content: flex-end;
+}
+
+.hinweis__ok {
+  min-width: 140px;
+  min-height: 56px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .hinweis {
+    padding: var(--luft-3) var(--luft-2) var(--luft-2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,0 +1,337 @@
+/* Tripel – Zerlegen bis 10 */
+
+/* Die Kartenfarben entsprechen den echten Tripel-Karten aus der Klasse,
+   damit das Kind sie wiedererkennt. Sie gelten nur für die Karten. */
+:root {
+  --karte-rosa: #f3cbd6;
+  --karte-gelb: #f4e2a2;
+  --karte-rot: #eaa79c;
+  --karte-orange: #f3c492;
+  --karte-blau: var(--himmel);
+  --karte-gruen: #d3e3b8;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ---------- Statistik (klein, oben in der Mitte) ---------- */
+
+.statistik {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 1.25rem;
+}
+
+.statistik__teil {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statistik__teil svg {
+  width: 28px;
+  height: 28px;
+}
+
+.statistik__teil--leise {
+  opacity: 0.7;
+}
+
+/* ---------- Bühne ---------- */
+
+.tripel-buehne {
+  --karte-breite: min(48vw, 66vh * 1.5, 640px);
+  --antwort-groesse: clamp(76px, 15vh, 124px);
+
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(28px, 6vw, 96px);
+  padding: 0 clamp(16px, 3vw, 40px) clamp(16px, 4vh, 40px);
+}
+
+.karten-platz {
+  position: relative;
+  /* Platz über der Karte, damit die Kuh hervorgucken kann */
+  padding-top: calc(var(--karte-breite) * 0.16);
+}
+
+/* ---------- Karte ---------- */
+
+.karte {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 46fr 54fr;
+  width: var(--karte-breite);
+  aspect-ratio: 3 / 2;
+  padding: calc(var(--karte-breite) * 0.07) calc(var(--karte-breite) * 0.09);
+  background: var(--karte-rosa);
+  border: var(--linie);
+  border-radius: var(--rund-mittel);
+  font-family: var(--schrift-lesen);
+  container-type: inline-size;
+}
+
+.karte[data-farbe="gelb"] { background: var(--karte-gelb); }
+.karte[data-farbe="rot"] { background: var(--karte-rot); }
+.karte[data-farbe="orange"] { background: var(--karte-orange); }
+.karte[data-farbe="blau"] { background: var(--karte-blau); }
+.karte[data-farbe="gruen"] { background: var(--karte-gruen); }
+
+.karte__feld {
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--fleck);
+  font-size: 18cqi;
+  line-height: 1;
+}
+
+.karte__feld--boss {
+  grid-column: 1 / -1;
+  border-bottom: 0;
+}
+
+.karte__feld--links {
+  border-right: 0;
+}
+
+/* Das leere Feld: gestrichelter Rahmen innen, damit klar ist, wo die Zahl hinkommt */
+.karte__feld[data-fehlt="ja"] span {
+  display: grid;
+  place-items: center;
+  min-width: 1.3em;
+  min-height: 1.15em;
+  border: 3px dashed var(--fleck);
+  border-radius: var(--rund-klein);
+  background: color-mix(in srgb, var(--creme) 60%, transparent);
+}
+
+.karte__feld[data-ergebnis="falsch"] span {
+  border-style: solid;
+  background: var(--creme);
+}
+
+.karte__feld[data-ergebnis="richtig"] span {
+  border-style: solid;
+  background: var(--wiese);
+}
+
+/* ---------- Kuh, die hinter der Karte hervorguckt ---------- */
+
+.kuh-gucken {
+  position: absolute;
+  z-index: 0;
+  right: 6%;
+  top: 0;
+  width: calc(var(--karte-breite) * 0.3);
+  aspect-ratio: 270 / 220;
+}
+
+.kuh-gucken svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kuh-gucken.guckt {
+  animation: kuh-guckt 480ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@keyframes kuh-guckt {
+  from { transform: translateY(60%); }
+  to { transform: none; }
+}
+
+/* ---------- Antworten ---------- */
+
+.antwort-bereich {
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 3vh, 28px);
+}
+
+.antworten {
+  display: grid;
+  grid-auto-flow: row;
+  gap: clamp(12px, 2vh, 20px);
+}
+
+.antworten[data-anzahl="10"] {
+  --antwort-groesse: clamp(58px, 12vh, 96px);
+  grid-template-columns: repeat(2, auto);
+  gap: clamp(8px, 1.4vh, 14px) clamp(12px, 1.6vw, 20px);
+}
+
+.antwort {
+  display: grid;
+  place-items: center;
+  width: var(--antwort-groesse);
+  height: var(--antwort-groesse);
+  min-width: var(--touch);
+  min-height: var(--touch);
+  padding: 0;
+  border: var(--linie);
+  border-radius: var(--rund-kreis);
+  background: var(--creme);
+  color: var(--fleck);
+  font-family: var(--schrift-lesen);
+  font-size: calc(var(--antwort-groesse) * 0.5);
+  line-height: 1;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.antwort:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.antwort:disabled {
+  cursor: default;
+}
+
+.antwort[data-ergebnis="richtig"] {
+  background: var(--wiese);
+}
+
+/* falsch gewählt: durchgestrichen und blass – ohne Rot, ohne Schimpfen */
+.antwort[data-ergebnis="falsch"] {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+/* die richtige Antwort nach einem Fehler: kräftiger Rahmen */
+.antwort[data-ergebnis="loesung"] {
+  background: var(--wiese);
+  outline: 3px dashed var(--fleck);
+  outline-offset: 5px;
+}
+
+.weiter-knopf {
+  width: clamp(110px, 14vw, 150px);
+  min-height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+}
+
+.weiter-knopf svg {
+  width: 100%;
+  height: auto;
+}
+
+.weiter-knopf:active svg {
+  transform: translateY(3px);
+}
+
+.weiter-knopf[data-sichtbar="nein"] {
+  visibility: hidden;
+}
+
+/* ---------- Elternbereich ---------- */
+
+.farbwahl {
+  display: grid;
+  gap: 8px;
+}
+
+.farbe-knopf {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+  text-align: left;
+}
+
+.farbe-knopf[aria-pressed="true"] {
+  background: var(--wiese-hell);
+  border-width: 3px;
+}
+
+.farbe-knopf__muster {
+  width: 36px;
+  height: 26px;
+  border: 2px solid var(--fleck);
+  border-radius: 6px 8px 5px 7px;
+}
+
+.farbe-knopf__text small {
+  display: block;
+  opacity: 0.75;
+}
+
+.vollbild-knopf[data-vollbild="an"] .vollbild-an,
+.vollbild-knopf:not([data-vollbild="an"]) .vollbild-aus {
+  display: none;
+}
+
+.anleitung p + p,
+.anleitung ul {
+  margin-top: 10px;
+}
+
+.anleitung__aufgaben {
+  font-family: var(--schrift-lesen);
+}
+
+.anleitung__farben {
+  padding-left: 20px;
+}
+
+/* ---------- Hochformat ---------- */
+
+@media (max-aspect-ratio: 1/1) {
+  .tripel-buehne {
+    --karte-breite: min(90vw, 560px);
+    --antwort-groesse: clamp(68px, 18vw, 112px);
+    grid-template-columns: auto;
+    align-content: center;
+  }
+
+  .antworten {
+    grid-auto-flow: column;
+  }
+
+  .antworten[data-anzahl="10"] {
+    --antwort-groesse: clamp(54px, 15vw, 88px);
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, auto);
+  }
+}
+
+/* sehr flach (Handy quer) */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  .leiste {
+    padding-block: 8px;
+  }
+
+  .tripel-buehne {
+    --karte-breite: min(52vw, 60vh * 1.5);
+    --antwort-groesse: clamp(64px, 20vh, 96px);
+    gap: 24px;
+  }
+
+  .antworten {
+    grid-auto-flow: column;
+  }
+
+  .antworten[data-anzahl="10"] {
+    --antwort-groesse: 56px;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, auto);
+  }
+}

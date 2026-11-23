@@ -116,8 +116,10 @@
     import { allgemein, wendeSchriftAn } from './shared/settings.js';
     import { erzeugeKuh } from './shared/cow.js';
     import { el } from './shared/ui.js';
+    import { zeigeHinweisBeimErstenBesuch } from './shared/hinweis.js';
 
     wendeSchriftAn(allgemein().get('schrift'));
+    zeigeHinweisBeimErstenBesuch();
     document.getElementById('kuh').innerHTML = erzeugeKuh();
 
     const farbe = (name) => `var(--${String(name).replace(/[^a-z-]/g, '')})`;
