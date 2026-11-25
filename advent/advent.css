@@ -1,0 +1,215 @@
+/* Advent – „Winterwerkstatt“ (siehe design/advent/DESIGN.md) */
+
+@font-face {
+  font-family: "Jost";
+  src: url("fonts/Jost[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --schnee: #ffffff;
+  --tanne: #24483a;
+  --rot: #b8433a;
+  --senf: #d9a441;
+  --frost: #dde7ec;
+  --holz: #7a5a3a;
+  --haut: #f1d3bf;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--schnee);
+  color: var(--tanne);
+  font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Himmel mit Sternen und Schnee ---------- */
+
+.himmel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stern {
+  position: absolute;
+  width: var(--g, 14px);
+  height: var(--g, 14px);
+  fill: var(--senf);
+  animation: funkeln 4s ease-in-out infinite;
+  animation-delay: var(--v, 0s);
+}
+
+@keyframes funkeln {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.flocke {
+  position: absolute;
+  top: -12px;
+  width: var(--g, 6px);
+  height: var(--g, 6px);
+  border-radius: 50%;
+  background: var(--frost);
+  animation: fallen var(--d, 14s) linear infinite;
+  animation-delay: var(--v, 0s);
+}
+
+@keyframes fallen {
+  from { transform: translate(0, 0); }
+  50% { transform: translate(14px, 50vh); }
+  to { transform: translate(-6px, 105vh); }
+}
+
+/* ---------- Inhalt ---------- */
+
+.seite {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(36px, 8vh, 72px) 20px 0;
+}
+
+.etikett {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  padding-left: 0.28em;
+}
+
+.datum {
+  margin-top: 14px;
+  line-height: 1;
+}
+
+.datum__zahl {
+  display: block;
+  font-size: clamp(5.5rem, 26vw, 9rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--rot);
+}
+
+.datum__monat {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  font-weight: 500;
+}
+
+.spruch {
+  max-width: 26ch;
+  margin-top: 22px;
+  font-size: clamp(1.25rem, 5vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+/* ---------- Countdown im Schild mit Wichtel ---------- */
+
+.schild {
+  position: relative;
+  width: min(100%, 300px);
+  margin-top: 54px;
+  padding: 22px 14px 18px;
+  background: var(--schnee);
+  border: 2px solid var(--frost);
+  border-radius: 14px;
+}
+
+.wichtel {
+  position: absolute;
+  right: 26px;
+  top: -47px;
+  width: 64px;
+  height: 53px;
+}
+
+.naechte {
+  display: grid;
+  justify-items: center;
+}
+
+.naechte__zahl {
+  font-size: clamp(3.6rem, 18vw, 5rem);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.naechte__name {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  padding-left: 0.24em;
+  color: var(--rot);
+}
+
+.offen {
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.hinweis {
+  max-width: 34ch;
+  margin-top: 26px;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* ---------- Winterszene ---------- */
+
+.szene {
+  display: block;
+  width: min(100%, 720px);
+  height: auto;
+  margin: clamp(28px, 6vh, 56px) auto 0;
+  padding: 0 8px;
+}
+
+.fuss {
+  padding: 14px 20px 22px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--tanne);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stern,
+  .flocke {
+    animation: none;
+  }
+
+  .flocke {
+    display: none;
+  }
+}

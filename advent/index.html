@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <title>Adventskalender · 16. Dezember</title>
+  <link rel="icon" href="stern.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="advent.css">
+  <script type="module" src="advent.js"></script>
+</head>
+<body>
+  <div class="himmel" id="himmel" aria-hidden="true"></div>
+
+  <main class="seite">
+    <p class="etikett">ADVENTSKALENDER</p>
+
+    <h1 class="datum">
+      <span class="datum__zahl">16.</span>
+      <span class="datum__monat">Dezember</span>
+    </h1>
+
+    <p class="spruch">Nur noch ein paar Mal schlafen.</p>
+
+    <section class="schild" aria-labelledby="countdown-titel">
+      <svg class="wichtel" viewBox="0 0 40 33" aria-hidden="true">
+            <path fill="#f1d3bf" d="M10 26 L4.5 22.5 L10.5 29.5 Z M26 26 L31.5 22.5 L25.5 29.5 Z"/>
+            <path fill="#f1d3bf" d="M10 30 C10 21 26 21 26 30 Z"/>
+            <path fill="#24483a" d="M8.5 21 C10 11 18 4.5 31 2.5 C26.5 8.5 26.5 14 28 21 Z"/>
+            <rect x="8" y="19.5" width="20.5" height="2.6" rx="1.2" fill="#d9a441"/>
+            <circle cx="31.4" cy="2.8" r="2.3" fill="#b8433a"/>
+            <circle cx="15.3" cy="26.6" r="0.95" fill="#24483a"/>
+            <circle cx="20.7" cy="26.6" r="0.95" fill="#24483a"/>
+            <circle cx="9" cy="30.4" r="2.5" fill="#f1d3bf"/>
+            <circle cx="27" cy="30.4" r="2.5" fill="#f1d3bf"/>
+          </svg>
+      <h2 id="countdown-titel" hidden>Noch bis zum Türchen</h2>
+
+      <p class="naechte" id="countdown">
+        <span class="naechte__zahl" id="naechte">–</span>
+        <span class="naechte__name" id="naechte-name">NÄCHTE</span>
+      </p>
+
+      <p class="offen" id="offen" hidden>Das Türchen ist offen!</p>
+    </section>
+
+    <p class="hinweis" id="hinweis">Am 16. Dezember öffnet sich dieses Türchen.
+      Bis dahin: Plätzchen backen, Kerzen anzünden und die Vorfreude genießen.</p>
+
+    <svg class="szene" viewBox="0 0 560 102" aria-hidden="true">
+        <!-- Sterne und Flocken -->
+        <g fill="#d9a441">
+          <path d="M96 10 L97.6 14.4 L102 16 L97.6 17.6 L96 22 L94.4 17.6 L90 16 L94.4 14.4 Z"/>
+          <path d="M300 4 L301.3 7.7 L305 9 L301.3 10.3 L300 14 L298.7 10.3 L295 9 L298.7 7.7 Z"/>
+          <path d="M470 14 L471.3 17.7 L475 19 L471.3 20.3 L470 24 L468.7 20.3 L465 19 L468.7 17.7 Z"/>
+        </g>
+        <g fill="#dde7ec">
+          <circle cx="170" cy="14" r="2.2"/><circle cx="250" cy="26" r="1.8"/><circle cx="360" cy="18" r="2.2"/>
+          <circle cx="420" cy="34" r="1.8"/><circle cx="520" cy="8" r="2"/><circle cx="18" cy="24" r="1.8"/>
+        </g>
+
+        <!-- Schneehügel -->
+        <path fill="#dde7ec" d="M0 102 C14 95 40 92 80 91 C150 89 210 93 290 90 C370 87 430 93 490 89 C525 87 548 93 560 102 Z"/>
+
+        <!-- Tannenbaum groß -->
+        <rect x="47" y="82" width="8" height="10" rx="1.5" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M51 12 L74 46 L28 46 Z M51 30 L80 66 L22 66 Z M51 48 L86 86 L16 86 Z"/>
+        <path fill="#d9a441" d="M51 4 L53 9 L58 11 L53 13 L51 18 L49 13 L44 11 L49 9 Z"/>
+        <g fill="#b8433a"><circle cx="44" cy="58" r="2.6"/><circle cx="60" cy="74" r="2.6"/><circle cx="40" cy="78" r="2.6"/><circle cx="56" cy="40" r="2.4"/></g>
+
+        <!-- Schneemann -->
+        <g>
+          <circle cx="132" cy="78" r="14" fill="#ffffff" stroke="#c7d3da" stroke-width="1.4"/>
+          <circle cx="132" cy="56" r="10" fill="#ffffff" stroke="#c7d3da" stroke-width="1.4"/>
+          <rect x="123" y="42" width="18" height="3.5" rx="1.5" fill="#24483a"/>
+          <rect x="126" y="31" width="12" height="12" rx="1.5" fill="#24483a"/>
+          <path fill="#b8433a" d="M122 63 L142 63 L142 67 L139 67 L139 76 L134.5 76 L134.5 67 L122 67 Z"/>
+          <circle cx="128.5" cy="54" r="1.4" fill="#24483a"/><circle cx="135.5" cy="54" r="1.4" fill="#24483a"/>
+          <path fill="#d9a441" d="M132 56.5 L140 58 L132 59.5 Z"/>
+        </g>
+
+        <!-- Weihnachtsmann mit Sack -->
+        <g>
+          <path fill="#7a5a3a" d="M232 90 C228 78 232 66 244 66 C256 66 260 78 256 90 Z"/>
+          <path fill="#24483a" d="M240 66 L248 66 L246 62 L242 62 Z"/>
+          <path fill="#b8433a" d="M200 92 L224 92 L220 58 L204 58 Z"/>
+          <rect x="203" y="74" width="18" height="4" fill="#24483a"/>
+          <circle cx="212" cy="50" r="7.5" fill="#f1d3bf"/>
+          <path fill="#ffffff" stroke="#c7d3da" stroke-width="1" d="M204 51 C205 62 219 62 220 51 C216 55 208 55 204 51 Z"/>
+          <path fill="#b8433a" d="M203 46 L221 46 L226 32 Z"/>
+          <rect x="202" y="44" width="20" height="4" rx="2" fill="#ffffff" stroke="#c7d3da" stroke-width="1"/>
+          <circle cx="226.5" cy="31.5" r="3" fill="#ffffff" stroke="#c7d3da" stroke-width="1"/>
+          <circle cx="209.5" cy="49.5" r="1" fill="#24483a"/><circle cx="214.5" cy="49.5" r="1" fill="#24483a"/>
+        </g>
+
+        <!-- Schlitten mit Geschenken -->
+        <g>
+          <path fill="none" stroke="#7a5a3a" stroke-width="3.2" stroke-linecap="round" d="M286 90 L356 90 C364 90 366 82 360 80"/>
+          <path stroke="#7a5a3a" stroke-width="3" d="M298 90 L298 82 M342 90 L342 82"/>
+          <path fill="#b8433a" d="M290 82 L350 82 L354 66 L294 70 Z"/>
+          <rect x="300" y="50" width="20" height="18" rx="1.5" fill="#24483a"/>
+          <rect x="308.5" y="50" width="3" height="18" fill="#d9a441"/>
+          <path fill="none" stroke="#d9a441" stroke-width="2" d="M310 50 C304 44 302 48 310 50 C318 44 316 48 310 50"/>
+          <rect x="324" y="56" width="18" height="12" rx="1.5" fill="#d9a441"/>
+          <rect x="331.5" y="56" width="3" height="12" fill="#b8433a"/>
+        </g>
+
+        <!-- Elf mit Geschenk -->
+        <g>
+          <path fill="#24483a" d="M398 90 L420 90 L416 62 L402 62 Z"/>
+          <path fill="#d9a441" d="M402 72 L416 72 L416.6 75 L401.4 75 Z"/>
+          <circle cx="409" cy="54" r="7" fill="#f1d3bf"/>
+          <path fill="#f1d3bf" d="M402 54 L396 50 L402.5 57 Z M416 54 L422 50 L415.5 57 Z"/>
+          <path fill="#24483a" d="M401 50 L417 50 L428 36 Z"/>
+          <circle cx="429" cy="35" r="2.8" fill="#b8433a"/>
+          <circle cx="406.5" cy="54" r="1" fill="#24483a"/><circle cx="411.5" cy="54" r="1" fill="#24483a"/>
+          <rect x="420" y="72" width="14" height="12" rx="1.5" fill="#b8433a"/>
+          <rect x="425.5" y="72" width="3" height="12" fill="#d9a441"/>
+        </g>
+
+        <!-- kleine Tannen rechts -->
+        <rect x="487" y="84" width="6" height="8" rx="1" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M490 36 L506 62 L474 62 Z M490 52 L510 86 L470 86 Z"/>
+        <rect x="527" y="82" width="6" height="8" rx="1" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M530 44 L544 66 L516 66 Z M530 56 L548 84 L512 84 Z"/>
+      </svg>
+  </main>
+
+  <footer class="fuss">Privates, nicht kommerzielles Projekt · Keine Cookies, kein Tracking</footer>
+</body>
+</html>

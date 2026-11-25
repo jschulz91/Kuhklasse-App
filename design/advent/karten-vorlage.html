@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Advent – Karten (A4, 2 × A5 quer)</title>
+  <style>
+    @font-face {
+      font-family: "Jost";
+      src: url("../../advent/fonts/Jost[wght].ttf") format("truetype");
+      font-weight: 100 900;
+    }
+
+    :root {
+      --schnee: #ffffff;
+      --tanne: #24483a;
+      --rot: #b8433a;
+      --senf: #d9a441;
+      --frost: #dde7ec;
+      --holz: #7a5a3a;
+      --haut: #f1d3bf;
+    }
+
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: #d9d4cb; }
+
+    .blatt {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      display: grid;
+      grid-template-rows: 148.5mm 148.5mm;
+      background: var(--schnee);
+    }
+
+    /* Schnittmarken an den Rändern auf Höhe des Mittelschnitts */
+    .marke { position: absolute; top: calc(148.5mm - 0.1mm); width: 5mm; height: 0.2mm; background: #b9b2a6; }
+
+    .karte {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 40mm;
+      column-gap: 8mm;
+      padding: 10mm 16mm 9mm;
+      font-family: "Jost", sans-serif;
+      color: var(--tanne);
+    }
+
+    .text { align-self: center; padding-left: 2mm; }
+
+    .etikett {
+      font-size: 2.7mm;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+    }
+
+    .zahl {
+      margin-top: 2mm;
+      font-size: 30mm;
+      font-weight: 600;
+      line-height: 0.95;
+      color: var(--rot);
+      letter-spacing: -0.02em;
+    }
+
+    .monat {
+      font-size: 8mm;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    .anleitung {
+      margin-top: 5mm;
+      font-size: 3.4mm;
+      line-height: 1.45;
+    }
+
+    .adresse {
+      margin-top: 2mm;
+      font-size: 2.6mm;
+      letter-spacing: 0.06em;
+      color: var(--rot);
+    }
+
+    .qr-feld {
+      align-self: center;
+      justify-self: center;
+      display: grid;
+      justify-items: center;
+      gap: 3mm;
+    }
+
+    /* weißes Schild: der Innenrand (7 mm) ist der Freiraum für den QR-Code */
+    .qr-schild {
+      position: relative;
+      padding: 7mm;
+      background: var(--schnee);
+      border: 0.4mm solid var(--frost);
+      border-radius: 3mm;
+    }
+
+    .wichtel {
+      position: absolute;
+      right: 7mm;
+      top: -12mm;
+      width: 16mm;
+      height: 13.2mm;
+    }
+
+    .qr { width: 40mm; height: 40mm; }
+    .qr svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
+
+    .qr-hinweis {
+      font-size: 2.5mm;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+    }
+
+    .sterne {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .szene {
+      grid-column: 1 / -1;
+      align-self: end;
+      width: 100%;
+      height: 38mm;
+    }
+  </style>
+</head>
+<body>
+  <div class="blatt">
+    <span class="marke" style="left: 0"></span>
+    <span class="marke" style="right: 0"></span>
+  </div>
+
+  <template id="karte">
+    <section class="karte">
+      <!-- vereinzelte Sterne weiter oben (Maße in mm, auf die ganze Karte bezogen) -->
+      <svg class="sterne" viewBox="0 0 210 148.5" aria-hidden="true">
+        <g fill="#d9a441">
+          <path d="M92 12 L92.8 14.2 L95 15 L92.8 15.8 L92 18 L91.2 15.8 L89 15 L91.2 14.2 Z"/>
+          <path d="M121 7.5 L121.5 8.9 L122.9 9.4 L121.5 9.9 L121 11.3 L120.5 9.9 L119.1 9.4 L120.5 8.9 Z"/>
+          <path d="M190 12 L190.8 14.2 L193 15 L190.8 15.8 L190 18 L189.2 15.8 L187 15 L189.2 14.2 Z"/>
+          <path d="M104 50 L104.5 51.4 L105.9 51.9 L104.5 52.4 L104 53.8 L103.5 52.4 L102.1 51.9 L103.5 51.4 Z"/>
+          <path d="M197 70 L197.5 71.4 L198.9 71.9 L197.5 72.4 L197 73.8 L196.5 72.4 L195.1 71.9 L196.5 71.4 Z"/>
+        </g>
+        <g fill="#dde7ec">
+          <circle cx="78" cy="22" r="0.8"/><circle cx="150" cy="10" r="0.7"/><circle cx="112" cy="74" r="0.7"/>
+        </g>
+      </svg>
+
+      <div class="text">
+        <p class="etikett">ADVENTSKALENDER</p>
+        <p class="zahl">16.</p>
+        <p class="monat">Dezember</p>
+        <p class="anleitung">Ab dem 16. Dezember mit der<br>Smartphone-Kamera scannen<br>und den Link öffnen.</p>
+        <p class="adresse">kuhklasse.de/advent</p>
+      </div>
+
+      <div class="qr-feld">
+        <div class="qr-schild">
+          <!-- Wichtel guckt hinter dem Schild hervor, hält sich an der Kante fest -->
+          <svg class="wichtel" viewBox="0 0 40 33" aria-hidden="true">
+            <path fill="#f1d3bf" d="M10 26 L4.5 22.5 L10.5 29.5 Z M26 26 L31.5 22.5 L25.5 29.5 Z"/>
+            <path fill="#f1d3bf" d="M10 30 C10 21 26 21 26 30 Z"/>
+            <path fill="#24483a" d="M8.5 21 C10 11 18 4.5 31 2.5 C26.5 8.5 26.5 14 28 21 Z"/>
+            <rect x="8" y="19.5" width="20.5" height="2.6" rx="1.2" fill="#d9a441"/>
+            <circle cx="31.4" cy="2.8" r="2.3" fill="#b8433a"/>
+            <circle cx="15.3" cy="26.6" r="0.95" fill="#24483a"/>
+            <circle cx="20.7" cy="26.6" r="0.95" fill="#24483a"/>
+            <circle cx="9" cy="30.4" r="2.5" fill="#f1d3bf"/>
+            <circle cx="27" cy="30.4" r="2.5" fill="#f1d3bf"/>
+          </svg>
+          <div class="qr"><!--QR--></div>
+        </div>
+      </div>
+
+      <!-- Winterszene: Tannen, Schneemann, Weihnachtsmann, Schlitten, Elf -->
+      <svg class="szene" viewBox="0 0 560 102" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+        <!-- Sterne und Flocken -->
+        <g fill="#d9a441">
+          <path d="M96 10 L97.6 14.4 L102 16 L97.6 17.6 L96 22 L94.4 17.6 L90 16 L94.4 14.4 Z"/>
+          <path d="M300 4 L301.3 7.7 L305 9 L301.3 10.3 L300 14 L298.7 10.3 L295 9 L298.7 7.7 Z"/>
+          <path d="M470 14 L471.3 17.7 L475 19 L471.3 20.3 L470 24 L468.7 20.3 L465 19 L468.7 17.7 Z"/>
+        </g>
+        <g fill="#dde7ec">
+          <circle cx="170" cy="14" r="2.2"/><circle cx="250" cy="26" r="1.8"/><circle cx="360" cy="18" r="2.2"/>
+          <circle cx="420" cy="34" r="1.8"/><circle cx="520" cy="8" r="2"/><circle cx="18" cy="24" r="1.8"/>
+        </g>
+
+        <!-- Schneehügel -->
+        <path fill="#dde7ec" d="M0 102 C14 95 40 92 80 91 C150 89 210 93 290 90 C370 87 430 93 490 89 C525 87 548 93 560 102 Z"/>
+
+        <!-- Tannenbaum groß -->
+        <rect x="47" y="82" width="8" height="10" rx="1.5" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M51 12 L74 46 L28 46 Z M51 30 L80 66 L22 66 Z M51 48 L86 86 L16 86 Z"/>
+        <path fill="#d9a441" d="M51 4 L53 9 L58 11 L53 13 L51 18 L49 13 L44 11 L49 9 Z"/>
+        <g fill="#b8433a"><circle cx="44" cy="58" r="2.6"/><circle cx="60" cy="74" r="2.6"/><circle cx="40" cy="78" r="2.6"/><circle cx="56" cy="40" r="2.4"/></g>
+
+        <!-- Schneemann -->
+        <g>
+          <circle cx="132" cy="78" r="14" fill="#ffffff" stroke="#c7d3da" stroke-width="1.4"/>
+          <circle cx="132" cy="56" r="10" fill="#ffffff" stroke="#c7d3da" stroke-width="1.4"/>
+          <rect x="123" y="42" width="18" height="3.5" rx="1.5" fill="#24483a"/>
+          <rect x="126" y="31" width="12" height="12" rx="1.5" fill="#24483a"/>
+          <path fill="#b8433a" d="M122 63 L142 63 L142 67 L139 67 L139 76 L134.5 76 L134.5 67 L122 67 Z"/>
+          <circle cx="128.5" cy="54" r="1.4" fill="#24483a"/><circle cx="135.5" cy="54" r="1.4" fill="#24483a"/>
+          <path fill="#d9a441" d="M132 56.5 L140 58 L132 59.5 Z"/>
+        </g>
+
+        <!-- Weihnachtsmann mit Sack -->
+        <g>
+          <path fill="#7a5a3a" d="M232 90 C228 78 232 66 244 66 C256 66 260 78 256 90 Z"/>
+          <path fill="#24483a" d="M240 66 L248 66 L246 62 L242 62 Z"/>
+          <path fill="#b8433a" d="M200 92 L224 92 L220 58 L204 58 Z"/>
+          <rect x="203" y="74" width="18" height="4" fill="#24483a"/>
+          <circle cx="212" cy="50" r="7.5" fill="#f1d3bf"/>
+          <path fill="#ffffff" stroke="#c7d3da" stroke-width="1" d="M204 51 C205 62 219 62 220 51 C216 55 208 55 204 51 Z"/>
+          <path fill="#b8433a" d="M203 46 L221 46 L226 32 Z"/>
+          <rect x="202" y="44" width="20" height="4" rx="2" fill="#ffffff" stroke="#c7d3da" stroke-width="1"/>
+          <circle cx="226.5" cy="31.5" r="3" fill="#ffffff" stroke="#c7d3da" stroke-width="1"/>
+          <circle cx="209.5" cy="49.5" r="1" fill="#24483a"/><circle cx="214.5" cy="49.5" r="1" fill="#24483a"/>
+        </g>
+
+        <!-- Schlitten mit Geschenken -->
+        <g>
+          <path fill="none" stroke="#7a5a3a" stroke-width="3.2" stroke-linecap="round" d="M286 90 L356 90 C364 90 366 82 360 80"/>
+          <path stroke="#7a5a3a" stroke-width="3" d="M298 90 L298 82 M342 90 L342 82"/>
+          <path fill="#b8433a" d="M290 82 L350 82 L354 66 L294 70 Z"/>
+          <rect x="300" y="50" width="20" height="18" rx="1.5" fill="#24483a"/>
+          <rect x="308.5" y="50" width="3" height="18" fill="#d9a441"/>
+          <path fill="none" stroke="#d9a441" stroke-width="2" d="M310 50 C304 44 302 48 310 50 C318 44 316 48 310 50"/>
+          <rect x="324" y="56" width="18" height="12" rx="1.5" fill="#d9a441"/>
+          <rect x="331.5" y="56" width="3" height="12" fill="#b8433a"/>
+        </g>
+
+        <!-- Elf mit Geschenk -->
+        <g>
+          <path fill="#24483a" d="M398 90 L420 90 L416 62 L402 62 Z"/>
+          <path fill="#d9a441" d="M402 72 L416 72 L416.6 75 L401.4 75 Z"/>
+          <circle cx="409" cy="54" r="7" fill="#f1d3bf"/>
+          <path fill="#f1d3bf" d="M402 54 L396 50 L402.5 57 Z M416 54 L422 50 L415.5 57 Z"/>
+          <path fill="#24483a" d="M401 50 L417 50 L428 36 Z"/>
+          <circle cx="429" cy="35" r="2.8" fill="#b8433a"/>
+          <circle cx="406.5" cy="54" r="1" fill="#24483a"/><circle cx="411.5" cy="54" r="1" fill="#24483a"/>
+          <rect x="420" y="72" width="14" height="12" rx="1.5" fill="#b8433a"/>
+          <rect x="425.5" y="72" width="3" height="12" fill="#d9a441"/>
+        </g>
+
+        <!-- kleine Tannen rechts -->
+        <rect x="487" y="84" width="6" height="8" rx="1" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M490 36 L506 62 L474 62 Z M490 52 L510 86 L470 86 Z"/>
+        <rect x="527" y="82" width="6" height="8" rx="1" fill="#7a5a3a"/>
+        <path fill="#24483a" d="M530 44 L544 66 L516 66 Z M530 56 L548 84 L512 84 Z"/>
+      </svg>
+    </section>
+  </template>
+
+  <script type="module">
+    // 2 gleiche Karten einsetzen und den QR-Code (qr-advent.svg) einbetten
+    const qr = await (await fetch('qr-advent.svg')).text();
+    const vorlage = document.getElementById('karte');
+    const blatt = document.querySelector('.blatt');
+    for (let i = 0; i < 2; i++) {
+      const karte = vorlage.content.cloneNode(true);
+      karte.querySelector('.qr').innerHTML = qr;
+      blatt.append(karte);
+    }
+    document.body.dataset.fertig = 'ja';
+  </script>
+</body>
+</html>
