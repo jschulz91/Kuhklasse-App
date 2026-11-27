@@ -1,0 +1,399 @@
+/* Hochzeit – „Gartenfest“ (siehe design/hochzeit/DESIGN.md) */
+
+@font-face {
+  font-family: "Jost";
+  src: url("fonts/Jost[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --creme: #f7f1e8;
+  --weiss: #ffffff;
+  --tinte: #3e4a3d;
+  --salbei: #8fa08a;
+  --altrosa: #d9a39b;
+  --rose: #f2ded8;
+  --gold: #c2a26b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--creme);
+  color: var(--tinte);
+  font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.seite {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(22px, 5vh, 48px) 16px 24px;
+  text-align: center;
+}
+
+.etikett {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  padding-left: 0.26em;
+}
+
+.namen {
+  margin-top: 4px;
+  font-size: clamp(2.2rem, 10vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.und {
+  color: var(--altrosa);
+}
+
+.status {
+  min-height: 1.6em;
+  margin-top: 10px;
+  font-size: 1.05rem;
+}
+
+.status strong {
+  font-weight: 500;
+}
+
+.status[data-wer="h"] strong { color: var(--tinte); }
+.status[data-wer="j"] strong { color: #b8766d; }
+
+/* ---------- Spielfläche ---------- */
+
+.buehne {
+  position: relative;
+  width: min(100%, 420px);
+  height: min(64vh, 560px);
+  min-height: 340px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--weiss);
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.teller {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 22px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--gold);
+}
+
+.etage {
+  position: absolute;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+/* Torten je Runde: Farbe für Hendrik (--h), für Julia (--j) und die Verzierung (--deko) */
+.buehne {
+  --h: var(--tinte);
+  --j: var(--altrosa);
+  --sahne: var(--weiss);
+  --deko: radial-gradient(circle, var(--gold) 1.6px, transparent 2px) 0 0 / 12px 4px repeat-x;
+  --deko-hoehe: 4px;
+}
+
+/* Erdbeertorte: Beeren am Rand */
+.buehne[data-torte="erdbeer"] {
+  --h: #c9706a;
+  --j: #f2c4c0;
+  --deko: radial-gradient(circle, #b8433a 3px, transparent 3.4px) 0 0 / 16px 8px repeat-x;
+  --deko-hoehe: 8px;
+}
+
+/* Blütentorte: weiße Blüten mit goldener Mitte */
+.buehne[data-torte="bluete"] {
+  --h: var(--salbei);
+  --j: #c9d6c0;
+  --deko: radial-gradient(circle, var(--gold) 1.3px, var(--weiss) 1.7px, var(--weiss) 3.4px, transparent 3.8px) 0 0 / 15px 8px repeat-x;
+  --deko-hoehe: 8px;
+}
+
+/* Schokotorte: Sahnetupfen */
+.buehne[data-torte="schoko"] {
+  --h: #5a3b2e;
+  --j: #8a5a44;
+  --sahne: #f7ead8;
+  --deko: radial-gradient(circle, #f7ead8 2.6px, transparent 3px) 0 0 / 14px 7px repeat-x;
+  --deko-hoehe: 7px;
+}
+
+/* Goldene Torte: weiß und champagner mit Goldband */
+.buehne[data-torte="gold"] {
+  --h: #fbf8f2;
+  --j: #efe2c4;
+  --sahne: var(--gold);
+  --deko: linear-gradient(var(--gold), var(--gold)) 0 0 / 100% 3px no-repeat;
+  --deko-hoehe: 3px;
+}
+
+.buehne[data-torte="gold"] .etage,
+.buehne[data-torte="gold"] .stueck {
+  box-shadow: inset 0 0 0 1px #e3d3ad;
+}
+
+.etage[data-wer="h"],
+.stueck[data-wer="h"] { background: var(--h); }
+.etage[data-wer="j"],
+.stueck[data-wer="j"] { background: var(--j); }
+
+.etage::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 26%;
+  background: var(--sahne);
+  border-radius: 0 0 40% 40% / 0 0 100% 100%;
+}
+
+.etage::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 22%;
+  height: var(--deko-hoehe);
+  background: var(--deko);
+}
+
+.stueck {
+  position: absolute;
+  border-radius: 7px;
+  transition: transform 900ms cubic-bezier(0.45, 0, 0.8, 0.5), opacity 900ms ease-in;
+}
+
+
+/* Taube fliegt ab und zu durchs Bild (ab Runde 4, nur Deko) */
+.taube {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  width: 40px;
+  height: 28px;
+  pointer-events: none;
+  animation: taube-fliegt 5200ms linear forwards;
+}
+
+@keyframes taube-fliegt {
+  0% { transform: translate(-50px, 0); }
+  25% { transform: translate(calc(var(--b) * 0.25), -10px); }
+  50% { transform: translate(calc(var(--b) * 0.5), 4px); }
+  75% { transform: translate(calc(var(--b) * 0.75), -8px); }
+  100% { transform: translate(calc(var(--b) + 50px), 0); }
+}
+
+.brautpaar {
+  position: absolute;
+  width: 74px;
+  height: 84px;
+  transition: transform 700ms cubic-bezier(0.25, 0.8, 0.35, 1.15);
+}
+
+/* ---------- Überlagerungen in der Spielfläche ---------- */
+
+.schicht {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.schicht__titel {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+.schicht__text {
+  max-width: 24ch;
+  font-size: 1.1rem;
+}
+
+.schicht__text strong {
+  font-weight: 500;
+}
+
+.schicht__klein {
+  max-width: 28ch;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.herzen {
+  display: flex;
+  gap: 28px;
+}
+
+.herz-knopf {
+  position: relative;
+  width: 104px;
+  height: 96px;
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: none;
+}
+
+.herz-knopf svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--rose);
+  stroke: var(--altrosa);
+  stroke-width: 2;
+  transition: transform 150ms ease, fill 150ms ease;
+}
+
+.herz-knopf span {
+  position: absolute;
+  inset: 0 0 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.herz-knopf[data-gedrueckt="ja"] svg {
+  fill: var(--altrosa);
+  transform: scale(1.08);
+}
+
+.herz-knopf[data-gedrueckt="ja"] span {
+  color: var(--weiss);
+}
+
+.knopf {
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 26px;
+  background: var(--salbei);
+  color: var(--weiss);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.knopf:focus-visible,
+.herz-knopf:focus-visible {
+  outline: 3px solid var(--altrosa);
+  outline-offset: 3px;
+}
+
+.knopf--leise {
+  background: transparent;
+  color: var(--tinte);
+  box-shadow: inset 0 0 0 2px var(--salbei);
+}
+
+/* ---------- Gruß ---------- */
+
+.gruss {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(62, 74, 61, 0.35);
+  animation: einblenden 500ms ease;
+}
+
+.gruss__karte {
+  width: min(100%, 440px);
+  padding: 30px 24px 26px;
+  border-radius: 20px;
+  background: var(--weiss);
+  text-align: center;
+}
+
+.gruss__ringe {
+  width: 64px;
+  height: 36px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.gruss__text {
+  margin-top: 18px;
+  font-size: clamp(1.35rem, 5.6vw, 1.6rem);
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+.gruss__von {
+  margin-top: 16px;
+  color: #b8766d;
+  font-weight: 500;
+}
+
+.gruss__knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+@keyframes einblenden {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taube {
+    display: none;
+  }
+
+  .stueck,
+  .brautpaar,
+  .gruss {
+    transition: none;
+    animation: none;
+  }
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f7f1e8">
+  <title>Für Hendrik &amp; Julia</title>
+  <link rel="icon" href="herz.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="spiel.js"></script>
+</head>
+<body>
+  <main class="seite">
+    <header class="kopf">
+      <p class="etikett">FÜR</p>
+      <h1 class="namen">Hendrik <span class="und">&amp;</span> Julia</h1>
+      <p class="status" id="status" aria-live="polite">Backt gemeinsam eure Hochzeitstorte.</p>
+    </header>
+
+    <!-- Spielfläche -->
+    <div class="buehne" id="buehne" aria-label="Spielfläche: tippen, um die Etage abzusetzen">
+      <div class="teller" id="teller"></div>
+
+      <!-- Start: beide legen gleichzeitig einen Finger auf ihr Herz -->
+      <div class="schicht" id="start">
+        <p class="etikett" id="runde-info"></p>
+        <p class="schicht__text">Legt <strong>beide gleichzeitig</strong> einen Finger auf euer Herz.</p>
+        <div class="herzen">
+          <button type="button" class="herz-knopf" id="herz-h" data-wer="h" aria-label="Herz von Hendrik">
+            <svg viewBox="0 0 48 44" aria-hidden="true"><path d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/></svg>
+            <span>H</span>
+          </button>
+          <button type="button" class="herz-knopf" id="herz-j" data-wer="j" aria-label="Herz von Julia">
+            <svg viewBox="0 0 48 44" aria-hidden="true"><path d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/></svg>
+            <span>J</span>
+          </button>
+        </div>
+        <p class="schicht__klein" id="start-hinweis">Danach tippt ihr abwechselnd im richtigen Moment, damit die Etage genau auf der Torte landet.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Gruß nach der fertigen Torte -->
+  <div class="gruss" id="gruss" hidden>
+    <div class="gruss__karte" role="dialog" aria-labelledby="gruss-titel">
+      <svg class="gruss__ringe" viewBox="0 0 64 36" aria-hidden="true">
+        <circle cx="24" cy="18" r="13" fill="none" stroke="#c2a26b" stroke-width="3.5"/>
+        <circle cx="40" cy="18" r="13" fill="none" stroke="#c2a26b" stroke-width="3.5"/>
+      </svg>
+      <p class="etikett" id="gruss-titel"></p>
+      <p class="gruss__text" id="gruss-text"></p>
+      <p class="gruss__von" id="gruss-von"></p>
+      <div class="gruss__knoepfe">
+        <button type="button" class="knopf" id="neu-backen">Nochmal backen</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
