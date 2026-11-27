@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Hochzeit – Karten (A4, 2 × A5 quer)</title>
+  <style>
+    @font-face {
+      font-family: "Jost";
+      src: url("../../h-und-j/fonts/Jost[wght].ttf") format("truetype");
+      font-weight: 100 900;
+    }
+
+    :root {
+      --weiss: #ffffff;
+      --tinte: #3e4a3d;
+      --salbei: #8fa08a;
+      --altrosa: #d9a39b;
+      --rose: #f2ded8;
+      --gold: #c2a26b;
+    }
+
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: #d9d4cb; }
+
+    .blatt {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      display: grid;
+      grid-template-rows: 148.5mm 148.5mm;
+      background: var(--weiss);
+    }
+
+    .marke { position: absolute; top: calc(148.5mm - 0.1mm); width: 5mm; height: 0.2mm; background: #b9b2a6; }
+
+    .karte {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 30mm;
+      column-gap: 8mm;
+      padding: 11mm 16mm 9mm;
+      font-family: "Jost", sans-serif;
+      color: var(--tinte);
+    }
+
+    .text { align-self: center; padding-left: 2mm; }
+
+    .etikett {
+      font-size: 2.6mm;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+    }
+
+    .titel {
+      margin-top: 3mm;
+      font-size: 13mm;
+      font-weight: 300;
+      line-height: 1.05;
+    }
+
+    .titel span { color: var(--altrosa); }
+
+    .anleitung {
+      margin-top: 5mm;
+      font-size: 3.4mm;
+      line-height: 1.45;
+    }
+
+    .von {
+      margin-top: 5mm;
+      font-size: 3mm;
+      line-height: 1.45;
+      color: #b8766d;
+      font-weight: 500;
+    }
+
+    .adresse {
+      margin-top: 3mm;
+      font-size: 2.5mm;
+      letter-spacing: 0.06em;
+      color: var(--salbei);
+    }
+
+    .qr-feld { align-self: center; justify-self: center; }
+
+    .qr-schild {
+      position: relative;
+      padding: 7mm;
+      background: var(--weiss);
+      border: 0.4mm solid var(--rose);
+      border-radius: 3mm;
+    }
+
+    .paar {
+      position: absolute;
+      right: 5mm;
+      top: -15.1mm;
+      width: 26mm;
+      height: 17.7mm;
+    }
+
+    .qr { width: 40mm; height: 40mm; }
+    .qr svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
+
+    .motive {
+      grid-column: 1 / -1;
+      align-self: end;
+      width: 100%;
+      height: 28mm;
+    }
+
+    .herzchen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="blatt">
+    <span class="marke" style="left: 0"></span>
+    <span class="marke" style="right: 0"></span>
+  </div>
+
+  <template id="karte">
+    <section class="karte">
+      <!-- vereinzelte kleine Herzen (Maße in mm, auf die ganze Karte bezogen) -->
+      <svg class="herzchen" viewBox="0 0 210 148.5" aria-hidden="true">
+        <g fill="#d9a39b">
+          <path transform="translate(92 14) scale(0.13)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(190 16) scale(0.1)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(104 58) scale(0.08)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(196 78) scale(0.08)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(58 8) scale(0.07)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(136 7) scale(0.09)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(111 33) scale(0.07)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(201 44) scale(0.07)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(98 95) scale(0.1)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(150 101) scale(0.07)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(182 103) scale(0.09)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(66 104) scale(0.06)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+          <path transform="translate(9 60) scale(0.06)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+        </g>
+        <g fill="#c2a26b"><circle cx="124" cy="9" r="0.7"/><circle cx="80" cy="24" r="0.6"/><circle cx="114" cy="80" r="0.6"/></g>
+      </svg>
+
+      <div class="text">
+        <p class="etikett">FÜR HENDRIK &amp; JULIA</p>
+        <p class="titel">Alles Liebe<br><span>für euch zwei</span></p>
+        <p class="anleitung">Scannt den Code mit der Handykamera.<br>Dort wartet ein kleines Spiel, bei dem<br>ihr eure gemeinsame Stärke testen könnt.</p>
+        <p class="von">Von Andre &amp; Neele, Stefan &amp; Sandra<br>und Joshua &amp; Antje</p>
+      </div>
+
+      <div class="qr-feld">
+        <div class="qr-schild">
+          <!-- Brautpaar guckt hinter dem Schild hervor -->
+          <svg class="paar" viewBox="0 0 52 35.4" aria-hidden="true">
+            <path fill="#d9a39b" d="M26 6 C24 3 20 4 20.5 7 C21 9 26 11.5 26 11.5 C26 11.5 31 9 31.5 7 C32 4 28 3 26 6 Z"/>
+            <!-- Bräutigam -->
+            <path fill="#f1d3bf" d="M9 32 C9 22 23 22 23 32 Z"/>
+            <path fill="#3e4a3d" d="M8.6 26 C9 19.5 23 19.5 23.4 26 C21 23.5 11 23.5 8.6 26 Z"/>
+            <circle cx="13.6" cy="28.4" r="0.9" fill="#3e4a3d"/><circle cx="18.4" cy="28.4" r="0.9" fill="#3e4a3d"/>
+            <!-- Braut mit Schleier -->
+            <path fill="#f2ded8" d="M28 34 C26 24 31 18.5 36 18.5 C41 18.5 46 24 44 34 Z"/>
+            <path fill="#f1d3bf" d="M29.5 32 C29.5 22.5 42.5 22.5 42.5 32 Z"/>
+            <path fill="#c2a26b" d="M30.5 24.6 C33 21.5 39 21.5 41.5 24.6 C38 23.4 34 23.4 30.5 24.6 Z"/>
+            <circle cx="33.6" cy="28.4" r="0.9" fill="#3e4a3d"/><circle cx="38.4" cy="28.4" r="0.9" fill="#3e4a3d"/>
+            <!-- Hände an der Kante -->
+            <circle cx="9" cy="32.6" r="2.4" fill="#f1d3bf"/><circle cx="23" cy="32.6" r="2.4" fill="#f1d3bf"/>
+            <circle cx="29.5" cy="32.6" r="2.4" fill="#f1d3bf"/><circle cx="42.5" cy="32.6" r="2.4" fill="#f1d3bf"/>
+          </svg>
+          <div class="qr"><!--QR--></div>
+        </div>
+      </div>
+
+      <!-- Hochzeitsmotive: Blumenranke, Torte, Ringe, Sekt, Brautstrauß, Geschenk -->
+      <svg class="motive" viewBox="0 0 560 76" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+        <!-- Blumenranke links -->
+        <path fill="none" stroke="#8fa08a" stroke-width="2.2" stroke-linecap="round" d="M14 74 C22 58 22 44 34 32 C42 24 50 22 58 20"/>
+        <g fill="#8fa08a">
+          <path d="M22 60 C14 58 10 52 12 48 C18 50 22 54 22 60 Z"/><path d="M27 46 C34 42 40 44 42 48 C36 50 31 50 27 46 Z"/>
+          <path d="M36 32 C32 25 34 19 38 18 C40 24 39 29 36 32 Z"/><path d="M48 23 C54 18 60 19 62 22 C56 25 52 25 48 23 Z"/>
+        </g>
+        <g fill="#d9a39b"><circle cx="58" cy="19" r="4.6"/><circle cx="24" cy="66" r="3.6"/></g>
+        <g fill="#f2ded8"><circle cx="58" cy="19" r="1.8"/><circle cx="24" cy="66" r="1.4"/></g>
+
+        <!-- Torte -->
+        <rect x="88" y="72" width="64" height="4" rx="2" fill="#c2a26b"/>
+        <rect x="94" y="54" width="52" height="18" rx="3" fill="#3e4a3d"/>
+        <rect x="101" y="38" width="38" height="16" rx="3" fill="#d9a39b"/>
+        <rect x="108" y="24" width="24" height="14" rx="3" fill="#3e4a3d"/>
+        <g fill="#ffffff"><rect x="94" y="54" width="52" height="4" rx="2"/><rect x="101" y="38" width="38" height="3.6" rx="1.8"/><rect x="108" y="24" width="24" height="3.4" rx="1.7"/></g>
+        <g fill="#c2a26b"><circle cx="102" cy="66" r="1.2"/><circle cx="110" cy="66" r="1.2"/><circle cx="118" cy="66" r="1.2"/><circle cx="126" cy="66" r="1.2"/><circle cx="134" cy="66" r="1.2"/><circle cx="142" cy="66" r="1.2"/></g>
+        <path fill="#d9a39b" transform="translate(113.5 9) scale(0.27)" d="M24 42 C10 31 2 23 2 13 C2 6 7 2 13 2 C18 2 22 5 24 9 C26 5 30 2 35 2 C41 2 46 6 46 13 C46 23 38 31 24 42 Z"/>
+
+        <!-- Ringe -->
+        <g fill="none" stroke="#c2a26b" stroke-width="4">
+          <circle cx="208" cy="56" r="14"/><circle cx="228" cy="56" r="14"/>
+        </g>
+        <path fill="#f2ded8" d="M216 36 L220 30 L224 36 L220 40 Z"/>
+
+        <!-- Sektgläser, die anstoßen -->
+        <g transform="rotate(-12 296 50)">
+          <path fill="#f2ded8" d="M286 22 L300 22 L298 46 C297 50 289 50 288 46 Z"/>
+          <path fill="#c2a26b" d="M287 32 L299 32 L298 46 C297 50 289 50 288 46 Z"/>
+          <rect x="292" y="49" width="2.4" height="18" fill="#8fa08a"/>
+          <rect x="286" y="66" width="14" height="3" rx="1.5" fill="#8fa08a"/>
+        </g>
+        <g transform="rotate(12 324 50)">
+          <path fill="#f2ded8" d="M316 22 L330 22 L328 46 C327 50 319 50 318 46 Z"/>
+          <path fill="#c2a26b" d="M317 32 L329 32 L328 46 C327 50 319 50 318 46 Z"/>
+          <rect x="322" y="49" width="2.4" height="18" fill="#8fa08a"/>
+          <rect x="316" y="66" width="14" height="3" rx="1.5" fill="#8fa08a"/>
+        </g>
+        <g fill="#c2a26b"><circle cx="310" cy="12" r="1.6"/><circle cx="302" cy="6" r="1.1"/><circle cx="318" cy="5" r="1.1"/></g>
+
+        <!-- Brautstrauß -->
+        <path fill="#8fa08a" d="M386 34 C378 30 374 24 376 20 C382 22 386 28 386 34 Z M418 34 C426 30 430 24 428 20 C422 22 418 28 418 34 Z"/>
+        <path fill="#f2ded8" d="M392 44 L412 44 L404 72 L400 72 Z"/>
+        <path fill="#c2a26b" d="M396 50 L408 50 L406.6 55 L397.4 55 Z"/>
+        <g fill="#d9a39b"><circle cx="392" cy="32" r="8"/><circle cx="412" cy="32" r="8"/></g>
+        <circle cx="402" cy="24" r="8.6" fill="#f2ded8"/>
+        <g fill="#ffffff"><circle cx="392" cy="32" r="2.6"/><circle cx="412" cy="32" r="2.6"/></g>
+        <circle cx="402" cy="24" r="3" fill="#d9a39b"/>
+        <circle cx="402" cy="40" r="6.4" fill="#d9a39b"/><circle cx="402" cy="40" r="2.2" fill="#ffffff"/>
+
+        <!-- Geschenk -->
+        <rect x="468" y="46" width="36" height="28" rx="2.5" fill="#d9a39b"/>
+        <rect x="465" y="40" width="42" height="9" rx="2" fill="#d9a39b"/>
+        <rect x="483" y="40" width="6" height="34" fill="#c2a26b"/>
+        <path fill="none" stroke="#c2a26b" stroke-width="3" d="M486 40 C476 30 472 36 486 40 C500 30 504 36 486 40"/>
+
+        <!-- Zweiglein rechts -->
+        <path fill="none" stroke="#8fa08a" stroke-width="2.2" stroke-linecap="round" d="M546 74 C540 60 540 48 532 38"/>
+        <g fill="#8fa08a"><path d="M540 58 C548 56 552 50 550 46 C544 48 540 52 540 58 Z"/><path d="M536 46 C528 44 524 38 526 34 C532 36 536 40 536 46 Z"/></g>
+      </svg>
+    </section>
+  </template>
+
+  <script type="module">
+    const qr = await (await fetch('qr-h-und-j.svg')).text();
+    const vorlage = document.getElementById('karte');
+    const blatt = document.querySelector('.blatt');
+    for (let i = 0; i < 2; i++) {
+      const karte = vorlage.content.cloneNode(true);
+      karte.querySelector('.qr').innerHTML = qr;
+      blatt.append(karte);
+    }
+    document.body.dataset.fertig = 'ja';
+  </script>
+</body>
+</html>

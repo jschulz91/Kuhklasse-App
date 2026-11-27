@@ -10,23 +10,23 @@ function absender() {
   return `Von ${PAARE[Math.floor(Math.random() * PAARE.length)]}`;
 }
 
-// Jede Runde eine andere Torte – und ab Runde 3 kleine Erschwernisse.
+// Jede Runde eine andere Torte – ab der Schokotorte mit Taube, die goldene Torte ist schmaler.
 const TORTEN = [
   { id: 'klassisch', name: 'Klassische Torte' },
   { id: 'erdbeer', name: 'Erdbeertorte' },
-  { id: 'bluete', name: 'Blütentorte', wechselTempo: true },
-  { id: 'schoko', name: 'Schokotorte', wechselTempo: true, taube: true },
-  { id: 'gold', name: 'Goldene Torte', wechselTempo: true, taube: true, schmal: true },
+  { id: 'bluete', name: 'Blütentorte' },
+  { id: 'schoko', name: 'Schokotorte', taube: true },
+  { id: 'gold', name: 'Goldene Torte', taube: true, schmal: true },
 ];
 // Schwierigkeit: Jede geschaffte Torte bekommt in der nächsten Runde mehr Etagen
 // und die Etagen werden schneller.
 const START_ETAGEN = 8;
 const PLUS_ETAGEN = 2;
 const MAX_ETAGEN = 16;
-const TEMPO_START = 0.6; // Breiten der Spielfläche pro Sekunde
-const TEMPO_PRO_ETAGE = 0.09;
-const TEMPO_PRO_RUNDE = 0.15; // +15 % je Runde
-const TOLERANZ = 0.012; // so knapp neben der Mitte wird noch verziehen (Anteil der Breite)
+const TEMPO_START = 0.48; // Breiten der Spielfläche pro Sekunde
+const TEMPO_PRO_ETAGE = 0.06;
+const TEMPO_PRO_RUNDE = 0.1; // +10 % je Runde
+const TOLERANZ = 0.02; // so knapp neben der Mitte wird noch verziehen (Anteil der Breite)
 
 // Grüße nach jedem Spiel – je besser die Torte, desto freundlicher.
 const GRUESSE = {
@@ -145,7 +145,6 @@ function starte() {
   messe();
   zustand.wer = 'h';
   zustand.laeuft = true;
-  zustand.phase = Math.random() * Math.PI * 2;
   buehne.dataset.torte = torte().id;
   $('start').hidden = true;
   zustand.ersteTaube = false;
@@ -175,10 +174,8 @@ function bewege(jetzt) {
   if (!a || !zustand.laeuft) return;
   const dt = Math.min((jetzt - zustand.zuletzt) / 1000, 0.05);
   zustand.zuletzt = jetzt;
-  // ab der Blütentorte: mal schneller, mal langsamer
-  const faktor = torte().wechselTempo ? 1 + 0.45 * Math.sin((jetzt / 1000) * 2.4 + zustand.phase) : 1;
-  zustand.effektiv = zustand.tempo * faktor;
-  a.x += a.richtung * zustand.effektiv * dt;
+  // gleichmäßiges Tempo innerhalb einer Etage
+  a.x += a.richtung * zustand.tempo * dt;
   if (a.x <= 0) { a.x = 0; a.richtung = 1; }
   if (a.x + a.w >= masse.breite) { a.x = masse.breite - a.w; a.richtung = -1; }
   a.el.style.left = `${a.x}px`;
@@ -212,7 +209,7 @@ function setzeAb() {
     // Kleine Ungenauigkeiten verzeihen: wenn fast mittig, genau mittig setzen.
     const mitte = unten.x + (unten.w - a.w) / 2;
     // Toleranz wächst mit dem Tempo: etwa so weit, wie die Etage in einem Bild (1/60 s) fährt
-    if (Math.abs(a.x - mitte) < Math.max(masse.breite * TOLERANZ, (zustand.effektiv || zustand.tempo) / 60)) {
+    if (Math.abs(a.x - mitte) < Math.max(masse.breite * TOLERANZ, zustand.tempo / 60)) {
       x = mitte;
     } else {
       const links = Math.max(a.x, unten.x);
