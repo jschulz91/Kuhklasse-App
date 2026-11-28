@@ -206,6 +206,7 @@ Hilfreiche gemeinsame Bausteine in `shared/`:
 | `tokens.css` | Palette, Schriften, Rundungen, Abstände |
 | `base.css` | Kopfleiste, Knöpfe, Elternbereich, Editor-Stile |
 | `settings.js` | Einstellungen im `localStorage` (mit Fallback) |
+| `verlauf.js` | Antwortverlauf im `localStorage`, begrenzt auf die letzten N Einträge |
 | `content.js` | Laden von Fächern, Spielen, Sets und Prüfung des Set-Rahmens |
 | `set-editor.js` | Formular, Prüfung, Vorschau, Download |
 | `ui.js` | Vollbild, Elternbereich, kleiner DOM-Helfer |

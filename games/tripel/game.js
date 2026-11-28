@@ -5,6 +5,7 @@ import { erzeugeKuh } from '../../shared/cow.js';
 import { el, richteElternbereichEin, richteVollbildEin } from '../../shared/ui.js';
 import { FARBEN, FARB_IDS, antwortenFuer, kartenFuer } from './karten.js';
 import { zeigeHinweisBeimErstenBesuch } from '../../shared/hinweis.js';
+import { verlauf } from '../../shared/verlauf.js';
 
 const POSITIONEN = ['boss', 'links', 'rechts'];
 const WARTEN_NACH_RICHTIG = 1600; // ms bis zur nächsten Karte
@@ -16,6 +17,13 @@ const einst = einstellungen('tripel', {
   antworten: '3',
 });
 const allg = allgemein();
+
+// Jede Antwort: t Zeit, f Farbe, b/l/r Karte, p fehlende Stelle, e Eingabe des Kindes
+const log = verlauf('tripel', {
+  max: 500,
+  gueltig: (e) =>
+    POSITIONEN.includes(e.p) && [e.b, e.l, e.r, e.e].every(Number.isFinite) && typeof e.f === 'string',
+});
 
 const zustand = {
   stapel: [],
@@ -40,6 +48,12 @@ const dom = {
   farbwahl: $('farbwahl'),
   kartenAnzahl: $('karten-anzahl'),
   rundeInfo: $('runde-info'),
+  verlauf: $('verlauf'),
+  verlaufSumme: $('verlauf-summe'),
+  verlaufListe: $('verlauf-liste'),
+  nurFehler: $('nur-fehler'),
+  loeschenReihe: $('loeschen-reihe'),
+  loeschenFrage: $('loeschen-frage'),
 };
 
 const bewegungAus = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -140,6 +154,7 @@ function antworte(knopf) {
   const { karte, position } = zustand;
   const loesung = karte[position];
   const gewaehlt = Number(knopf.dataset.zahl);
+  log.hinzu({ f: karte.farbe, b: karte.boss, l: karte.links, r: karte.rechts, p: position, e: gewaehlt });
   const feld = dom.felder[position];
   feld.querySelector('span').textContent = String(loesung);
 
@@ -162,6 +177,7 @@ function antworte(knopf) {
   dom.weiter.dataset.sichtbar = 'ja';
   zeigeStatistik();
   zeigeRundeInfo();
+  if (!dom.verlauf.hidden) zeigeVerlauf();
 }
 
 dom.antworten.addEventListener('click', (ereignis) => {
@@ -260,6 +276,157 @@ function richteElternEin() {
   });
 }
 
+// ---------- Verlauf ----------
+
+const ICON = {
+  richtig:
+    '<svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' +
+    '<path class="f-wiese" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>' +
+    '<path class="f-keine" style="stroke: var(--creme); stroke-width: 4" d="M12,21 L18,27 L28,14"/></svg>',
+  falsch:
+    '<svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">' +
+    '<path class="f-creme" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>' +
+    '<path class="f-keine" d="M14,14 L26,26 M26,14 L14,26"/></svg>',
+};
+
+const istRichtig = (e) => e.e === { boss: e.b, links: e.l, rechts: e.r }[e.p];
+
+function icon(richtig) {
+  const span = el('span', { class: 'verlauf__icon' }, el('span', { class: 'nur-vorlesen', text: richtig ? 'richtig' : 'falsch' }));
+  span.insertAdjacentHTML('afterbegin', richtig ? ICON.richtig : ICON.falsch);
+  return span;
+}
+
+function zaehler(richtig, falsch) {
+  return el(
+    'span',
+    { class: 'verlauf__zaehler' },
+    icon(true),
+    String(richtig),
+    icon(false),
+    String(falsch),
+  );
+}
+
+const tagSchluessel = (d) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+
+function tagName(d) {
+  const datum = d.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+  const gestern = new Date();
+  gestern.setDate(gestern.getDate() - 1);
+  if (tagSchluessel(d) === tagSchluessel(new Date())) return `Heute, ${datum}`;
+  if (tagSchluessel(d) === tagSchluessel(gestern)) return `Gestern, ${datum}`;
+  return datum;
+}
+
+function miniKarte(e) {
+  const werte = { boss: e.b, links: e.l, rechts: e.r };
+  const beschreibung = POSITIONEN.map((p) => (p === e.p ? 'fehlt' : werte[p]));
+  return el(
+    'span',
+    {
+      class: 'mini-karte',
+      dataset: { farbe: e.f },
+      role: 'img',
+      'aria-label': `Aufgabe: Boss ${beschreibung[0]}, links ${beschreibung[1]}, rechts ${beschreibung[2]}`,
+    },
+    ...POSITIONEN.map((p) =>
+      el('span', { class: `mini-karte__feld mini-karte__feld--${p}`, dataset: { fehlt: p === e.p ? 'ja' : 'nein' } },
+        p === e.p ? '?' : String(werte[p])),
+    ),
+  );
+}
+
+function zeile(e) {
+  const richtig = istRichtig(e);
+  const loesung = { boss: e.b, links: e.l, rechts: e.r }[e.p];
+  return el(
+    'li',
+    { class: 'verlauf__zeile', dataset: { ergebnis: richtig ? 'richtig' : 'falsch' } },
+    miniKarte(e),
+    el('span', { class: 'verlauf__eingabe' }, el('span', { class: 'nur-vorlesen', text: 'Eingabe ' }), String(e.e)),
+    icon(richtig),
+    el('span', { class: 'verlauf__loesung', text: richtig ? '' : `richtig: ${loesung}` }),
+  );
+}
+
+function zeigeVerlauf() {
+  const alle = log.alle().reverse(); // neueste zuerst
+  const nurFehler = dom.nurFehler.checked;
+  const falschGesamt = alle.filter((e) => !istRichtig(e)).length;
+
+  dom.verlaufSumme.replaceChildren(
+    alle.length
+      ? el('span', {}, alle.length === 1 ? 'Letzte Antwort: ' : `Letzte ${alle.length} Antworten: `, zaehler(alle.length - falschGesamt, falschGesamt))
+      : 'Noch keine Antworten gespeichert.',
+  );
+
+  // nach Tag gruppieren (Reihenfolge bleibt: neuester Tag zuerst)
+  const tage = new Map();
+  for (const e of alle) {
+    const d = new Date(e.t);
+    const k = tagSchluessel(d);
+    if (!tage.has(k)) tage.set(k, { datum: d, eintraege: [] });
+    tage.get(k).eintraege.push(e);
+  }
+
+  dom.verlaufListe.replaceChildren(
+    ...[...tage.values()].map(({ datum, eintraege }) => {
+      const falsch = eintraege.filter((e) => !istRichtig(e)).length;
+      const sichtbar = nurFehler ? eintraege.filter((e) => !istRichtig(e)) : eintraege;
+      return el(
+        'section',
+        { class: 'verlauf__tag' },
+        el('h3', { class: 'verlauf__tag-kopf' }, el('span', { text: tagName(datum) }), zaehler(eintraege.length - falsch, falsch)),
+        sichtbar.length
+          ? el('ol', { class: 'verlauf__liste' }, ...sichtbar.map(zeile))
+          : el('p', { class: 'hinweis', text: 'Keine Fehler.' }),
+      );
+    }),
+  );
+  dom.loeschenReihe.hidden = alle.length === 0;
+  dom.loeschenFrage.hidden = true;
+}
+
+function richteVerlaufEin() {
+  const oeffner = $('statistik');
+  const elternOeffner = $('eltern-auf');
+  const eltern = $('eltern');
+  richteElternbereichEin({ oeffner, leiste: dom.verlauf, schliesser: $('verlauf-zu') });
+
+  // immer nur eine Seitenleiste offen
+  const schliesseAndere = (leiste, knopf) => {
+    leiste.hidden = true;
+    knopf.setAttribute('aria-expanded', 'false');
+  };
+  oeffner.addEventListener('click', () => {
+    if (!dom.verlauf.hidden) {
+      schliesseAndere(eltern, elternOeffner);
+      zeigeVerlauf();
+    }
+  });
+  elternOeffner.addEventListener('click', () => {
+    if (!eltern.hidden) schliesseAndere(dom.verlauf, oeffner);
+  });
+
+  dom.nurFehler.addEventListener('change', zeigeVerlauf);
+  $('verlauf-loeschen').addEventListener('click', () => {
+    dom.loeschenReihe.hidden = true;
+    dom.loeschenFrage.hidden = false;
+    $('loeschen-nein').focus();
+  });
+  $('loeschen-nein').addEventListener('click', () => {
+    dom.loeschenFrage.hidden = true;
+    dom.loeschenReihe.hidden = false;
+    $('verlauf-loeschen').focus();
+  });
+  $('loeschen-ja').addEventListener('click', () => {
+    log.loeschen();
+    zeigeVerlauf();
+    $('verlauf-zu').focus();
+  });
+}
+
 // ---------- Start ----------
 
 wendeSchriftAn(allg.get('schrift'));
@@ -267,6 +434,7 @@ zeigeHinweisBeimErstenBesuch();
 richteVollbildEin($('vollbild'));
 richteElternbereichEin({ oeffner: $('eltern-auf'), leiste: $('eltern'), schliesser: $('eltern-zu') });
 richteElternEin();
+richteVerlaufEin();
 neuerStapel();
 naechsteKarte();
 zeigeStatistik();

@@ -19,11 +19,25 @@ body {
 
 /* ---------- Statistik (klein, oben in der Mitte) ---------- */
 
+/* zugleich der Knopf zum Verlauf */
 .statistik {
+  min-height: var(--touch);
+  padding: 4px 14px;
+  border: 0;
+  border-radius: var(--rund-mittel);
+  background: none;
+  font-size: 1.25rem;
+  touch-action: manipulation;
+}
+
+.statistik:active {
+  transform: translateY(2px);
+}
+
+.statistik__zahlen {
   display: flex;
   align-items: center;
   gap: 18px;
-  font-size: 1.25rem;
 }
 
 .statistik__teil {
@@ -80,11 +94,16 @@ body {
   container-type: inline-size;
 }
 
-.karte[data-farbe="gelb"] { background: var(--karte-gelb); }
-.karte[data-farbe="rot"] { background: var(--karte-rot); }
-.karte[data-farbe="orange"] { background: var(--karte-orange); }
-.karte[data-farbe="blau"] { background: var(--karte-blau); }
-.karte[data-farbe="gruen"] { background: var(--karte-gruen); }
+.karte[data-farbe="gelb"],
+.mini-karte[data-farbe="gelb"] { background: var(--karte-gelb); }
+.karte[data-farbe="rot"],
+.mini-karte[data-farbe="rot"] { background: var(--karte-rot); }
+.karte[data-farbe="orange"],
+.mini-karte[data-farbe="orange"] { background: var(--karte-orange); }
+.karte[data-farbe="blau"],
+.mini-karte[data-farbe="blau"] { background: var(--karte-blau); }
+.karte[data-farbe="gruen"],
+.mini-karte[data-farbe="gruen"] { background: var(--karte-gruen); }
 
 .karte__feld {
   display: grid;
@@ -290,6 +309,139 @@ body {
 
 .anleitung__farben {
   padding-left: 20px;
+}
+
+/* ---------- Verlauf ---------- */
+
+.verlauf__oben {
+  display: grid;
+  gap: var(--luft-2);
+}
+
+.verlauf__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.verlauf__filter input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--wiese);
+}
+
+.verlauf__zaehler {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.verlauf__zaehler > .verlauf__icon:not(:first-child) {
+  margin-left: 8px;
+}
+
+.verlauf__icon {
+  display: inline-grid;
+  place-items: center;
+}
+
+.verlauf__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.verlauf__tag + .verlauf__tag {
+  margin-top: var(--luft-3);
+}
+
+.verlauf__tag-kopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-bottom: var(--luft-1);
+  font-size: 1.05rem;
+}
+
+.verlauf__liste {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verlauf__zeile {
+  display: grid;
+  grid-template-columns: auto 2.2em auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0;
+}
+
+.verlauf__eingabe {
+  font-family: var(--schrift-lesen);
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.verlauf__zeile[data-ergebnis="falsch"] .verlauf__eingabe {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.verlauf__zeile .verlauf__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.verlauf__loesung {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.verlauf__frage {
+  flex-basis: 100%;
+}
+
+/* kleine Tripel-Karte im Verlauf */
+.mini-karte {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 78px;
+  aspect-ratio: 3 / 2;
+  padding: 4px 6px;
+  background: var(--karte-rosa);
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  font-family: var(--schrift-lesen);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.mini-karte__feld {
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--fleck);
+}
+
+.mini-karte__feld--boss {
+  grid-column: 1 / -1;
+  border-bottom: 0;
+}
+
+.mini-karte__feld--links {
+  border-right: 0;
+}
+
+.mini-karte__feld[data-fehlt="ja"] {
+  background: color-mix(in srgb, var(--creme) 70%, transparent);
+  font-weight: 700;
 }
 
 /* ---------- Hochformat ---------- */
