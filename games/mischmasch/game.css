@@ -1,0 +1,622 @@
+/* Mischmasch – Farben mischen wie im Tuschkasten */
+
+/* Die Malfarben selbst kommen aus farben.js (Inline-Stile). Sie gelten nur
+   für Näpfe, Schale und Kleckse – der Rest bleibt in der Palette. */
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.misch-buehne {
+  --klecks-groesse: clamp(120px, 30vh, 260px);
+  --napf-breite: clamp(64px, 8vw, 96px);
+
+  position: relative;
+  isolation: isolate; /* damit die laufende Kuh hinter allem bleibt */
+  flex: 1;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(16px, 3vw, 40px) clamp(16px, 3vh, 32px);
+}
+
+/* ---------- Farbe treffen ---------- */
+
+.treffen {
+  display: grid;
+  justify-items: center;
+  gap: clamp(12px, 2.4vh, 24px);
+}
+
+.vergleich {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: start;
+  gap: clamp(24px, 8vw, 120px);
+}
+
+.ziel {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.klecks-platz {
+  position: relative;
+  z-index: 1;
+  width: var(--klecks-groesse);
+  height: var(--klecks-groesse);
+}
+
+.klecks-platz svg,
+.schale svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ziel__name {
+  font-family: var(--schrift-lesen);
+  font-size: clamp(1.2rem, 2.6vh, 1.6rem);
+}
+
+/* geschafft: der Zielklecks bekommt einen grünen Rand */
+.ziel__klecks[data-ergebnis="richtig"] svg {
+  filter: drop-shadow(0 0 0 var(--wiese)) drop-shadow(0 0 6px var(--wiese));
+}
+
+.schale-bereich {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.schale {
+  width: calc(var(--klecks-groesse) * 1.15);
+  height: calc(var(--klecks-groesse) * 1.15);
+  margin-top: calc(var(--klecks-groesse) * -0.075);
+}
+
+.schale__farbe {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.tupfer {
+  min-height: 22px;
+}
+
+/* ---------- Tupfer als Punkte (Schale, Rezept, Verlauf) ---------- */
+
+.punkte {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 8px;
+}
+
+.punkte__gruppe {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.punkte__plus {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.punkt {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-kreis);
+}
+
+.punkt--gross {
+  width: 30px;
+  height: 30px;
+}
+
+.rezept {
+  padding: 6px 12px;
+  border: 2px dashed var(--fleck-hell);
+  border-radius: var(--rund-klein);
+}
+
+.rezept .punkt {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Tipp nach einem Fehlversuch ---------- */
+
+.tipp {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 6px 16px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-mittel);
+  background: var(--himmel);
+  font-size: 1.05rem;
+}
+
+.tipp[hidden] {
+  display: none;
+}
+
+.tipp__zeichen {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* „mehr davon“: kleines Plus am Punkt */
+.tipp__zeichen--mehr::after {
+  content: "+";
+  position: absolute;
+  right: -10px;
+  top: -12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* „gehört nicht hinein“: Punkt durchgestrichen */
+.tipp__zeichen--zuviel::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  background: var(--fleck);
+  transform: rotate(-40deg);
+}
+
+/* ---------- Tuschkasten, Wasser, Fertig ---------- */
+
+.werkzeug {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.4vw, 28px);
+}
+
+.tuschkasten {
+  display: flex;
+  gap: clamp(6px, 1vw, 12px);
+  padding: clamp(8px, 1.4vw, 14px);
+  border: var(--linie);
+  border-radius: var(--rund-mittel);
+  background: var(--fleck-hell);
+}
+
+.napf {
+  display: grid;
+  place-items: center;
+  width: var(--napf-breite);
+  height: calc(var(--napf-breite) * 0.82);
+  min-width: 56px;
+  min-height: var(--touch);
+  padding: 6px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: #fffdf8;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.napf__farbe {
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-kreis);
+  /* leichte Spiegelung wie bei trockener Tusche */
+  box-shadow: inset 6px -6px 0 rgb(0 0 0 / 0.12), inset -4px 4px 0 rgb(255 255 255 / 0.25);
+}
+
+.napf:active {
+  transform: translateY(3px);
+}
+
+.tuschkasten[data-voll="ja"] .napf {
+  opacity: 0.6;
+}
+
+.werkzeug__knoepfe {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.wasser-knopf,
+.fertig-knopf {
+  display: grid;
+  place-items: center;
+  min-width: var(--touch);
+  min-height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+}
+
+.wasser-knopf svg {
+  width: clamp(60px, 8vh, 80px);
+  height: auto;
+}
+
+.fertig-knopf svg {
+  width: clamp(76px, 11vh, 104px);
+  height: auto;
+}
+
+.wasser-knopf:active svg,
+.fertig-knopf:active:not(:disabled) svg {
+  transform: translateY(3px);
+}
+
+.fertig-knopf:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ---------- Was kommt raus? ---------- */
+
+.raten {
+  display: grid;
+  justify-items: center;
+  gap: clamp(20px, 5vh, 48px);
+}
+
+.rechnung {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 20px);
+  padding: clamp(12px, 2vh, 20px) clamp(16px, 3vw, 32px);
+  border: var(--linie);
+  border-radius: var(--rund-gross);
+  background: #fffdf8;
+}
+
+.rechnung__gruppe {
+  display: flex;
+  gap: 4px;
+}
+
+.rechnung__zeichen {
+  font-family: var(--schrift-lesen);
+  font-size: clamp(2rem, 6vh, 3.2rem);
+  line-height: 1;
+}
+
+.klecks {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.klecks svg {
+  width: 100%;
+  height: 100%;
+}
+
+.klecks--napf {
+  width: clamp(56px, 10vh, 88px);
+  height: clamp(56px, 10vh, 88px);
+}
+
+.klecks--frage {
+  width: clamp(96px, 18vh, 150px);
+  height: clamp(96px, 18vh, 150px);
+}
+
+.klecks--frage > svg {
+  position: absolute;
+  inset: 0;
+}
+
+.klecks--leer {
+  stroke-dasharray: 8 8;
+}
+
+.klecks__frage {
+  position: relative;
+  font-family: var(--schrift-lesen);
+  font-size: clamp(2.4rem, 7vh, 4rem);
+  line-height: 1;
+}
+
+.raten__unten {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+}
+
+.auswahl {
+  display: flex;
+  gap: clamp(12px, 3vw, 36px);
+}
+
+.antwort-klecks {
+  width: clamp(96px, 20vh, 160px);
+  height: clamp(96px, 20vh, 160px);
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+}
+
+.antwort-klecks svg {
+  width: 100%;
+  height: 100%;
+}
+
+.antwort-klecks:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.antwort-klecks:disabled {
+  cursor: default;
+}
+
+/* falsch gewählt: blass – ohne Rot, ohne Schimpfen */
+.antwort-klecks[data-ergebnis="falsch"] {
+  opacity: 0.35;
+}
+
+/* richtige Antwort (gewählt oder nach einem Fehler gezeigt): kräftiger Rahmen */
+.antwort-klecks[data-ergebnis="richtig"],
+.antwort-klecks[data-ergebnis="loesung"] {
+  outline: 3px dashed var(--fleck);
+  outline-offset: 6px;
+  border-radius: var(--rund-kreis);
+}
+
+.weiter-knopf {
+  width: clamp(110px, 14vw, 150px);
+  min-height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  touch-action: manipulation;
+}
+
+.weiter-knopf svg {
+  width: 100%;
+  height: auto;
+}
+
+.weiter-knopf:active svg {
+  transform: translateY(3px);
+}
+
+.weiter-knopf[data-sichtbar="nein"] {
+  visibility: hidden;
+}
+
+/* ---------- Kuh, die hinten durchs Bild läuft ---------- */
+
+.kuh-lauf {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.kuh-lauf__figur {
+  width: min(70vw, 62vh * 1.23, 720px);
+  aspect-ratio: 270 / 220;
+  animation: kuh-laeuft var(--dauer-lauf, 3000ms) linear forwards;
+}
+
+.kuh-lauf__figur svg {
+  width: 100%;
+  height: 100%;
+  animation: kuh-schritt calc(var(--dauer-lauf, 3000ms) / 12) ease-in-out 12 alternate;
+}
+
+@keyframes kuh-laeuft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes kuh-schritt {
+  from { transform: translateY(0) rotate(-1deg); }
+  to { transform: translateY(-3%) rotate(1deg); }
+}
+
+/* Solange die Kuh läuft, tritt das Spielfeld zurück, damit man ihre Flecken sieht */
+.treffen,
+.raten {
+  transition: opacity 300ms ease;
+}
+
+.misch-buehne[data-kuh="laeuft"] .treffen,
+.misch-buehne[data-kuh="laeuft"] .raten {
+  opacity: 0.18;
+}
+
+/* „Bewegung reduzieren“: die Kuh steht einfach in der Mitte */
+.kuh-lauf[data-ruhig="ja"] {
+  justify-items: center;
+}
+
+.kuh-lauf[data-ruhig="ja"] .kuh-lauf__figur,
+.kuh-lauf[data-ruhig="ja"] .kuh-lauf__figur svg {
+  animation: none;
+}
+
+/* kurzes Wackeln: Napf beim Tipp, Wasserglas bei voller Schale, Farbe beim Tupfen */
+.wackelt {
+  animation: wackeln 420ms ease-in-out;
+}
+
+@keyframes wackeln {
+  0%, 100% { transform: none; }
+  25% { transform: rotate(-6deg) scale(1.04); }
+  75% { transform: rotate(5deg) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wackelt {
+    animation: none;
+  }
+}
+
+/* ---------- Elternbereich ---------- */
+
+.farbwahl {
+  display: grid;
+  gap: 8px;
+}
+
+.stufe-knopf {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+  background: var(--creme);
+  text-align: left;
+}
+
+.stufe-knopf[aria-pressed="true"] {
+  background: var(--wiese-hell);
+  border-width: 3px;
+}
+
+.stufe-knopf__muster {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.stufe-knopf__muster .farbfeld {
+  width: 24px;
+  height: 18px;
+}
+
+.stufe-knopf__text small {
+  display: block;
+  opacity: 0.75;
+}
+
+.vollbild-knopf[data-vollbild="an"] .vollbild-an,
+.vollbild-knopf:not([data-vollbild="an"]) .vollbild-aus {
+  display: none;
+}
+
+.anleitung p + p {
+  margin-top: 10px;
+}
+
+/* ---------- Verlauf ---------- */
+
+.farbfeld {
+  display: inline-block;
+  width: 44px;
+  height: 32px;
+  border: 2px solid var(--fleck);
+  border-radius: var(--rund-klein);
+}
+
+.verlauf-aufgabe,
+.verlauf-mischung {
+  display: inline-grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.verlauf-aufgabe small {
+  font-size: 0.8rem;
+}
+
+.verlauf-mischung .punkt,
+.verlauf-aufgabe .punkt {
+  width: 11px;
+  height: 11px;
+  border-width: 1.5px;
+}
+
+.verlauf .verlauf__zeile {
+  grid-template-columns: 78px auto auto 1fr;
+}
+
+.verlauf .verlauf__eingabe {
+  font-size: 1rem;
+}
+
+.verlauf .verlauf__zeile[data-ergebnis="falsch"] .verlauf__eingabe {
+  text-decoration: none;
+}
+
+.verlauf .verlauf__loesung {
+  opacity: 1;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- Hochformat ---------- */
+
+@media (max-aspect-ratio: 1/1) {
+  .kuh-lauf__figur {
+    width: min(95vw, 48vh * 1.23, 720px);
+  }
+
+  .misch-buehne {
+    --klecks-groesse: clamp(110px, 34vw, 240px);
+    --napf-breite: clamp(48px, 14vw, 96px);
+  }
+
+  .vergleich {
+    gap: clamp(16px, 6vw, 60px);
+  }
+
+  .tuschkasten {
+    gap: 6px;
+  }
+
+  .napf {
+    min-width: 44px;
+  }
+
+  .auswahl {
+    gap: 12px;
+  }
+
+  .antwort-klecks {
+    width: clamp(88px, 26vw, 150px);
+    height: clamp(88px, 26vw, 150px);
+  }
+}
+
+/* sehr flach (Handy quer) */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  .leiste {
+    padding-block: 8px;
+  }
+
+  .misch-buehne {
+    --klecks-groesse: clamp(90px, 28vh, 140px);
+  }
+}

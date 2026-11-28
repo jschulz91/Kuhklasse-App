@@ -23,6 +23,14 @@
       "pfad": "games/tripel/",
       "bild": "assets/svg/kachel-tripel.svg",
       "sets": false
+    },
+    {
+      "id": "mischmasch",
+      "titel": "Mischmasch",
+      "fach": "kunst",
+      "pfad": "games/mischmasch/",
+      "bild": "assets/svg/kachel-mischmasch.svg",
+      "sets": false
     }
   ]
 }

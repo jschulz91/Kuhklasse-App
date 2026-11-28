@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 170">
+  <!-- Kachelbild Mischmasch: Tuschkasten mit Rot, Gelb, Blau, ein grüner Klecks und ein Pinsel. Malfarben = Ausnahme wie die Tripel-Kartenfarben -->
+  <g stroke="#3b2a1f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="#9b8a7c" d="M18,92 C18,86 22,83 28,83 L170,82 C176,82 180,85 180,91 L181,146 C181,152 177,155 171,155 L28,156 C22,156 18,153 18,147 Z"/>
+    <path fill="#fffdf8" d="M30,96 L68,95 L68,142 L30,143 Z"/>
+    <path fill="#fffdf8" d="M80,95 L118,95 L118,142 L80,142 Z"/>
+    <path fill="#fffdf8" d="M130,95 L168,94 L169,141 L131,142 Z"/>
+    <path fill="#d8352b" stroke-width="2" d="M36,119 C36,106 62,105 62,119 C62,133 36,133 36,119 Z"/>
+    <path fill="#f6cf1d" stroke-width="2" d="M86,118 C86,105 112,105 112,118 C112,132 86,132 86,118 Z"/>
+    <path fill="#2a63b0" stroke-width="2" d="M136,118 C136,105 162,104 162,118 C162,131 136,132 136,118 Z"/>
+    <path fill="#3f9a3c" d="M150,30 C164,18 196,20 206,34 C216,48 210,66 196,72 C180,80 160,76 150,64 C140,52 140,40 150,30 Z"/>
+    <path fill="#fbf5e7" d="M60,74 L128,22 C132,19 136,22 133,26 L68,80 Z"/>
+    <path fill="#3b2a1f" d="M60,74 L68,80 L62,86 C58,88 52,86 52,82 Z"/>
+    <path fill="#3f9a3c" d="M52,82 C48,86 46,92 44,96 C50,94 56,90 62,86 Z"/>
+  </g>
+</svg>
