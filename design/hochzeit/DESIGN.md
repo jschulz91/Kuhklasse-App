@@ -49,12 +49,12 @@ sanft herunter. „Bewegung reduzieren“ am Gerät wird beachtet (keine fallend
 
 ## Karte mit QR-Code
 
-- **Format:** DIN A5 quer (210 × 148,5 mm), 2 Karten auf einem DIN-A4-Blatt hochkant,
-  ein Schnitt in der Mitte, Schnittmarken an den Rändern. Weißes Papier oder Karton (ca. 250 g/m²).
+- **Format:** DIN A5 quer (210 × 148,5 mm), eine Karte oben auf einem DIN-A4-Blatt hochkant,
+  ein Schnitt in der Mitte (Schnittmarken an den Rändern), die untere Hälfte bleibt leer. Weißes Papier oder Karton (ca. 250 g/m²).
 - **Aufbau:** links „FÜR HENDRIK & JULIA“, „Alles Liebe / für euch zwei“, Anleitung (macht
   neugierig auf das Spiel) und Absender (alle drei Paare), ohne ausgeschriebene Adresse; rechts der QR-Code auf einem weißen Schild mit rosé Rand,
-  hinter dem das Brautpaar hervorguckt; unten eine Reihe Motive (Blumenranke, Torte, Ringe,
-  Sektgläser, Brautstrauß, Geschenk); locker verteilte kleine Herzen.
+  hinter dem das Brautpaar hervorguckt (Bräutigam mit Zylinder, Braut mit Schleier und Blütenkranz, rosige Wangen, kleines Lächeln); unten eine Reihe Motive (Blumenranke, Torte, Ringe,
+  Sektgläser, zwei Herzen, Geschenk); locker verteilte kleine Herzen.
 - **QR-Code:** Tinte auf Weiß, 40 mm, 7 mm Freiraum im Schild, Fehlerkorrektur Q,
   Ziel `https://kuhklasse.de/h-und-j/`.
 - **Dateien:** `design/hochzeit/karten-vorlage.html` (Vorlage), `karten-entwurf.png` (Druckbild).
