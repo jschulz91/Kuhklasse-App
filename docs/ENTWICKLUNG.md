@@ -171,6 +171,26 @@ Weicht der echte Kartensatz ab, reicht eine Änderung der Liste `paare` in `kart
 
 ---
 
+## Mischmasch (Kunst)
+
+Farben mischen aus einem Tuschkasten mit Rot, Gelb, Blau, Weiß und Schwarz. Zwei Spielarten:
+**Farbe treffen** (Tupfer in die Schale, dann auf den grünen Haken) und **Was kommt raus?**
+(Mischung ansehen, Ergebnis aus drei Klecksen antippen).
+
+- **Mischmodell** (`farben.js`, Funktion `mische`): Rot, Gelb, Blau werden im RYB-Würfel
+  gemischt (Farbkreis nach Itten, Ecken sind die festen Mischfarben Orange, Grün, Lila, Braun).
+  Weiß und Schwarz werden danach anteilig eingemischt, Schwarz zählt 1,5-fach.
+- **Richtig** ist eine Mischung, wenn das Verhältnis der Tupfer zum Rezept passt
+  (`gleichesVerhaeltnis`: 2 Gelb + 1 Blau = 4 Gelb + 2 Blau).
+  Dann läuft eine große Kuh mit Flecken in der Zielfarbe hinter dem (abgeblendeten) Spielfeld
+  von links nach rechts (`erzeugeKuh(name, zufall, { fleckenFarbe })`), danach kommt die nächste Farbe.
+- **Tipp bei Fehlern:** Ist eine Farbe drin, die nicht ins Rezept gehört, wackelt das
+  Wasserglas („ausspülen“). Sonst wackelt das Näpfchen, von dem am meisten fehlt. Nach drei
+  Fehlversuchen erscheint das Rezept als Punkte unter dem Ziel (oder immer, wenn im
+  Elternbereich eingeschaltet).
+- **Zielfarben und Stufen** stehen in `STUFEN` in `farben.js`. Neue Farbe = neuer Eintrag mit
+  `id`, `name` und `rezept` (Tupfer im kleinsten Verhältnis, Schlüssel `r y b w s`).
+
 ## Neues Spiel anlegen
 
 1. Ordner `games/<spiel-id>/` mit `index.html` anlegen (Vorlage: `games/kuhmaschine/`).
@@ -207,6 +227,7 @@ Hilfreiche gemeinsame Bausteine in `shared/`:
 | `base.css` | Kopfleiste, Knöpfe, Elternbereich, Editor-Stile |
 | `settings.js` | Einstellungen im `localStorage` (mit Fallback) |
 | `verlauf.js` | Antwortverlauf im `localStorage`, begrenzt auf die letzten N Einträge |
+| `verlauf-ansicht.js` | Seitenleiste „Verlauf“ (nach Tag gruppiert, Filter, Löschen); das Spiel liefert nur die Spalten |
 | `content.js` | Laden von Fächern, Spielen, Sets und Prüfung des Set-Rahmens |
 | `set-editor.js` | Formular, Prüfung, Vorschau, Download |
 | `ui.js` | Vollbild, Elternbereich, kleiner DOM-Helfer |
@@ -251,6 +272,7 @@ index.html                        Startseite: Fächer mit Spiel-Kacheln
 games/kuhmaschine/                index.html, game.js, game.css, schema.js
 games/silbenflug/                 index.html, game.js, game.css (Sets aus kuhmaschine)
 games/tripel/                     index.html, game.js, game.css, karten.js
+games/mischmasch/                 index.html, game.js, game.css, farben.js
 shared/                           gemeinsame Bausteine (siehe oben)
 content/faecher.json              Fächer (Reihenfolge, Farbe)
 content/games.json                Spieleliste

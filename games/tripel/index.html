@@ -22,7 +22,7 @@
       </svg>
     </a>
 
-    <button type="button" class="statistik" id="statistik" aria-controls="verlauf" aria-expanded="false">
+    <button type="button" class="statistik" id="statistik" aria-expanded="false">
       <span class="statistik__zahlen" aria-live="polite">
         <span class="statistik__teil">
           <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
@@ -145,37 +145,6 @@
         <ul class="anleitung__farben" id="farb-liste"></ul>
       </div>
     </details>
-  </aside>
-  <aside class="eltern verlauf" id="verlauf" aria-labelledby="verlauf-titel" hidden>
-    <div class="eltern__kopf">
-      <h2 id="verlauf-titel">Verlauf</h2>
-      <button type="button" class="eltern__zu" id="verlauf-zu" aria-label="Verlauf schließen">
-        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-          <path class="f-keine" d="M10,10 L30,30 M30,10 L10,30"/>
-        </svg>
-      </button>
-    </div>
-
-    <section class="eltern__abschnitt verlauf__oben">
-      <p id="verlauf-summe"></p>
-      <label class="verlauf__filter"><input type="checkbox" id="nur-fehler"><span>Nur Fehler zeigen</span></label>
-    </section>
-
-    <section class="eltern__abschnitt">
-      <div id="verlauf-liste"></div>
-    </section>
-
-    <section class="eltern__abschnitt">
-      <p class="hinweis">Gespeichert werden die letzten 500 Antworten, nur auf diesem Gerät.</p>
-      <div class="knopf-reihe" id="loeschen-reihe">
-        <button type="button" class="knopf-text" id="verlauf-loeschen">Verlauf löschen</button>
-      </div>
-      <div class="knopf-reihe" id="loeschen-frage" hidden>
-        <p class="verlauf__frage">Wirklich den ganzen Verlauf löschen?</p>
-        <button type="button" class="knopf-text" id="loeschen-ja">Ja, löschen</button>
-        <button type="button" class="knopf-text" id="loeschen-nein">Abbrechen</button>
-      </div>
-    </section>
   </aside>
 </body>
 </html>

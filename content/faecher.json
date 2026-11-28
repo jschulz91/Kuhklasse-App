@@ -1,6 +1,7 @@
 {
   "faecher": [
     { "id": "lesen", "titel": "Lesen", "reihenfolge": 1, "farbe": "wiese" },
-    { "id": "mathe", "titel": "Mathe", "reihenfolge": 2, "farbe": "himmel" }
+    { "id": "mathe", "titel": "Mathe", "reihenfolge": 2, "farbe": "himmel" },
+    { "id": "kunst", "titel": "Kunst", "reihenfolge": 3, "farbe": "scheune" }
   ]
 }

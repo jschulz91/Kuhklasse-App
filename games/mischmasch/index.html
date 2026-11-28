@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fbf5e7">
+  <title>Mischmasch · Kuhklasse</title>
+  <link rel="icon" href="../../assets/svg/kachel-mischmasch.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <link rel="stylesheet" href="game.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <header class="leiste">
+    <a class="icon-knopf" href="../../" aria-label="Zur Startseite">
+      <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path class="f-creme" d="M5,36 L6,17 L20,5 L34,16 L35,36 Z"/>
+        <path class="f-wiese" d="M14,36 L14,24 L26,24 L26,36 Z"/>
+        <path class="f-keine" d="M14,24 L26,36 M26,24 L14,36"/>
+      </svg>
+    </a>
+
+    <button type="button" class="statistik" id="statistik" aria-expanded="false">
+      <span class="statistik__zahlen" aria-live="polite">
+        <span class="statistik__teil">
+          <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <path class="f-wiese" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>
+            <path class="f-keine" style="stroke: var(--creme); stroke-width: 4" d="M12,21 L18,27 L28,14"/>
+          </svg>
+          <span id="anzahl-richtig">0</span>
+          <span class="nur-vorlesen">richtig</span>
+        </span>
+        <span class="statistik__teil statistik__teil--leise">
+          <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <path class="f-creme" d="M20,4 C31,4 36,11 36,20 C36,30 30,36 20,36 C9,36 4,30 4,20 C4,10 10,4 20,4 Z"/>
+            <path class="f-keine" d="M14,14 L26,26 M26,14 L14,26"/>
+          </svg>
+          <span id="anzahl-falsch">0</span>
+          <span class="nur-vorlesen">falsch</span>
+        </span>
+      </span>
+      <span class="nur-vorlesen">– Verlauf anzeigen</span>
+    </button>
+
+    <div class="leiste__rechts">
+      <button type="button" class="icon-knopf vollbild-knopf" id="vollbild" aria-label="Vollbild" aria-pressed="false">
+        <svg class="strich vollbild-an" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M6,15 L6,6 L15,6 M25,6 L34,6 L34,15 M34,25 L34,34 L25,34 M15,34 L6,34 L6,25"/>
+        </svg>
+        <svg class="strich vollbild-aus" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M15,6 L15,15 L6,15 M25,6 L25,15 L34,15 M34,25 L25,25 L25,34 M6,25 L15,25 L15,34"/>
+        </svg>
+      </button>
+      <button type="button" class="eltern-knopf" id="eltern-auf" aria-controls="eltern" aria-expanded="false">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M5,12 L35,12 M5,28 L35,28"/>
+          <path class="f-creme" d="M10,12 C10,7 18,7 18,12 C18,17 10,17 10,12 Z"/>
+          <path class="f-creme" d="M22,28 C22,23 30,23 30,28 C30,33 22,33 22,28 Z"/>
+        </svg>
+        Eltern
+      </button>
+    </div>
+  </header>
+
+  <main class="misch-buehne">
+    <h1 class="nur-vorlesen">Mischmasch</h1>
+
+    <!-- Geschafft: eine große Kuh mit Flecken in der gemischten Farbe läuft hinten durchs Bild -->
+    <div class="kuh-lauf" id="kuh-lauf" aria-hidden="true"></div>
+
+    <!-- Spielart 1: Farbe treffen -->
+    <section class="treffen" id="treffen" aria-label="Farbe treffen">
+      <div class="vergleich">
+        <figure class="ziel">
+          <div class="klecks-platz ziel__klecks" id="ziel-klecks" role="img"></div>
+          <figcaption class="ziel__name" id="ziel-name"></figcaption>
+          <div class="rezept" id="rezept" hidden></div>
+        </figure>
+
+        <div class="schale-bereich">
+          <div class="schale" id="schale" role="img" aria-live="polite"></div>
+          <div class="tupfer" id="tupfer" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <p class="tipp" id="tipp" aria-live="polite" hidden></p>
+
+      <div class="werkzeug">
+        <div class="tuschkasten" id="tuschkasten" role="group" aria-label="Tuschkasten"></div>
+        <div class="werkzeug__knoepfe">
+          <button type="button" class="wasser-knopf" id="wasser" aria-label="Schale ausspülen">
+            <svg class="strich" viewBox="0 0 80 90" aria-hidden="true" focusable="false">
+              <path class="f-keine" d="M46,8 L36,52"/>
+              <path class="f-fleck" d="M34,50 C30,56 31,62 35,64 C39,62 41,57 38,51 Z"/>
+              <path class="f-himmel" d="M16,40 L64,40 L60,82 C60,85 58,86 55,86 L25,86 C22,86 20,85 20,82 Z"/>
+              <path class="f-keine" d="M12,24 L68,24 L62,84 C62,87 60,88 56,88 L24,88 C20,88 18,87 18,84 Z"/>
+              <path class="f-keine" d="M24,52 C30,48 36,56 42,52 C48,48 54,56 58,52"/>
+            </svg>
+          </button>
+          <button type="button" class="fertig-knopf" id="fertig" aria-label="Fertig gemischt – vergleichen" disabled>
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <path class="f-wiese strich" d="M50,6 C76,6 94,22 94,50 C94,78 76,94 50,94 C24,94 6,78 6,50 C6,22 24,6 50,6 Z"/>
+              <path fill="none" stroke="var(--fleck)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" d="M30,52 L44,66 L70,36"/>
+              <path fill="none" stroke="var(--creme)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M30,52 L44,66 L70,36"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spielart 2: Was kommt raus? -->
+    <section class="raten" id="raten" aria-label="Was kommt raus?" hidden>
+      <div class="rechnung" id="rechnung" role="img"></div>
+      <div class="raten__unten">
+        <div class="auswahl" id="auswahl" role="group" aria-label="Welche Farbe kommt heraus?"></div>
+        <button type="button" class="weiter-knopf" id="weiter" aria-label="Nächste Aufgabe" data-sichtbar="nein">
+          <svg viewBox="0 0 120 80" aria-hidden="true" focusable="false">
+            <path class="f-himmel strich" d="M8,40 C8,18 22,8 44,8 L82,8 C104,8 112,20 112,40 C112,62 102,72 82,72 L44,72 C22,72 8,62 8,40 Z"/>
+            <path fill="none" stroke="var(--fleck)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" d="M36,40 L82,40 M66,24 L84,40 L66,56"/>
+            <path fill="none" stroke="var(--creme)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M36,40 L82,40 M66,24 L84,40 L66,56"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <aside class="eltern" id="eltern" aria-labelledby="eltern-titel" hidden>
+    <div class="eltern__kopf">
+      <h2 id="eltern-titel">Elternbereich</h2>
+      <button type="button" class="eltern__zu" id="eltern-zu" aria-label="Elternbereich schließen">
+        <svg class="strich" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <path class="f-keine" d="M10,10 L30,30 M30,10 L10,30"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="eltern__abschnitt">
+      <h3>Spielart</h3>
+      <div class="wahl">
+        <label><input type="radio" name="modus" value="treffen"><span>Farbe treffen</span></label>
+        <label><input type="radio" name="modus" value="raten"><span>Was kommt raus?</span></label>
+      </div>
+      <p class="hinweis">„Farbe treffen“: Tupfer aus dem Tuschkasten in die Schale geben, bis die Farbe passt.
+        „Was kommt raus?“: Zwei oder drei Farben werden gemischt, das Kind tippt das Ergebnis an.</p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Welche Farben?</h3>
+      <div class="farbwahl" id="stufenwahl"></div>
+      <p class="hinweis" id="ziel-anzahl"></p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Rezept als Hilfe zeigen</h3>
+      <div class="wahl">
+        <label><input type="radio" name="hilfe" value="nein"><span>Nein</span></label>
+        <label><input type="radio" name="hilfe" value="ja"><span>Ja</span></label>
+      </div>
+      <p class="hinweis">Nur bei „Farbe treffen“. Ohne Hilfe erscheint das Rezept nach drei Fehlversuchen von selbst.</p>
+    </section>
+
+    <section class="eltern__abschnitt">
+      <h3>Diese Runde</h3>
+      <p class="hinweis" id="runde-info"></p>
+      <div class="knopf-reihe">
+        <button type="button" class="knopf-text" id="neue-runde">Neue Runde starten</button>
+      </div>
+    </section>
+
+    <details class="eltern__abschnitt">
+      <summary>So funktioniert das Mischen</summary>
+      <div class="anleitung">
+        <p>Gemischt wird wie mit dem Tuschkasten nach dem Farbkreis: <strong>Rot, Gelb und Blau</strong>
+          sind die Grundfarben. Sie lassen sich nicht aus anderen Farben mischen.</p>
+        <p>Aus zwei Grundfarben entstehen die Mischfarben: Rot + Gelb = Orange, Gelb + Blau = Grün,
+          Rot + Blau = Lila. Alle drei zusammen ergeben Braun.</p>
+        <p>Es kommt auf das <strong>Verhältnis</strong> an: 2 Gelb + 1 Blau ist dasselbe Gelbgrün wie
+          4 Gelb + 2 Blau. Weiß macht heller, Schwarz macht dunkler.</p>
+        <p>Was einmal in der Schale ist, geht nicht mehr heraus. Ist eine falsche Farbe drin, hilft nur
+          ausspülen – genau wie beim echten Malen.</p>
+        <p><strong>Tipp:</strong> Danach mit dem echten Tuschkasten nachmischen und vergleichen.</p>
+      </div>
+    </details>
+  </aside>
+</body>
+</html>

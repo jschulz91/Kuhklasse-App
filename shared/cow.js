@@ -129,10 +129,15 @@ export function erzeugeNamensschild(name, zufall = Math.random) {
  * Erzeugt eine zufällige Kuh als SVG-Text.
  * @param {string} name – für Vorleseprogramme (das Wort steht auf dem Namensschild)
  * @param {() => number} zufall – Zufallsquelle (Standard: Math.random)
+ * @param {{ fleckenFarbe?: string }} optionen – fleckenFarbe: Flecken in dieser Farbe (z. B. "#3f9a3c"),
+ *   dann immer helles Fell, mehr Flecken und ein Kopffleck, Flecken mit dünner Kontur
  */
-export function erzeugeKuh(name = '', zufall = Math.random) {
+export function erzeugeKuh(name = '', zufall = Math.random, { fleckenFarbe } = {}) {
   const id = `kuh-${++zaehler}`;
-  const farbe = waehle(zufall, FELLE);
+  const farbe = fleckenFarbe ? FELLE[0] : waehle(zufall, FELLE);
+  const fleckAttr = fleckenFarbe
+    ? `fill="${schuetze(fleckenFarbe)}" style="stroke-width: 2"`
+    : `class="${farbe.flecken} ohne-strich"`;
   const hoerner = waehle(zufall, ['keine', 'kurz', 'kurz', 'lang']);
   const hutArt = waehle(zufall, ['', '', 'stroh', 'muetze', 'blume']);
   const glocke = zufall() < 0.6;
@@ -140,17 +145,17 @@ export function erzeugeKuh(name = '', zufall = Math.random) {
   const offen = zufall() < 0.7;
 
   let flecken = '';
-  const anzahl = 2 + Math.floor(zufall() * 4);
+  const anzahl = (fleckenFarbe ? 4 : 2) + Math.floor(zufall() * 4);
   for (let i = 0; i < anzahl; i++) {
     const cx = 45 + zufall() * 145;
     const cy = 72 + zufall() * 76;
-    flecken += `<path class="${farbe.flecken} ohne-strich" d="${klecks(zufall, cx, cy, 14 + zufall() * 18, 10 + zufall() * 13)}"/>`;
+    flecken += `<path ${fleckAttr} d="${klecks(zufall, cx, cy, 14 + zufall() * 18, 10 + zufall() * 13)}"/>`;
   }
 
   let kopfFleck = '';
-  if (zufall() < 0.5) {
+  if (fleckenFarbe || zufall() < 0.5) {
     const links = zufall() < 0.5;
-    kopfFleck = `<path class="${farbe.flecken} ohne-strich" clip-path="url(#${id}-kopf)" d="${klecks(zufall, links ? 198 : 226, 70, 15, 13)}"/>`;
+    kopfFleck = `<path ${fleckAttr} clip-path="url(#${id}-kopf)" d="${klecks(zufall, links ? 198 : 226, 70, 15, 13)}"/>`;
   }
 
   const beineHinten = [bein(76, 203), bein(172, 203)];

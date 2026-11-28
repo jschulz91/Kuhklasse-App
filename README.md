@@ -36,10 +36,24 @@ wartet schon.
 Zahlen, die zusammen den Boss ergeben. Eine Zahl fehlt, das Kind tippt die richtige an.
 Bei einer richtigen Antwort guckt eine kleine Kuh hinter der Karte hervor. Bei einer falschen
 wird die Lösung gezeigt, und die Karte kommt etwas später noch einmal. Eine kleine Anzeige
-zählt richtige und falsche Antworten der aktuellen Sitzung.
+zählt richtige und falsche Antworten der aktuellen Sitzung. Ein Tipp darauf öffnet den
+Verlauf der letzten 500 Antworten, nach Tagen sortiert.
 
 Die Kartenfarben entsprechen den Tripel-Karten aus der Klasse (Nachbarkarten,
 Handkarten, Verdopplungen, Zehnerkarten und so weiter).
+
+### Mischmasch (Kunst)
+
+Farben mischen wie mit dem Tuschkasten: Oben steht ein Farbklecks als Ziel, unten ein
+Tuschkasten mit Rot, Gelb, Blau, Weiß und Schwarz. Jeder Tipp auf ein Näpfchen gibt einen Tupfer
+in die Schale, und die Farbe in der Schale mischt sich sofort neu. Passt die Farbe, läuft eine
+große Kuh mit Flecken in genau dieser Farbe durchs Bild. Passt sie nicht, zeigt ein kleiner Hinweis, welche Farbe fehlt oder nicht
+hineingehört. Mit dem Wasserglas wird die Schale ausgespült.
+
+Gemischt wird nach dem Farbkreis (Gelb + Blau = Grün, nicht Grau wie bei Bildschirmlicht).
+Es zählt das Verhältnis: 2 Gelb + 1 Blau ist dasselbe Gelbgrün wie 4 Gelb + 2 Blau. Es gibt
+drei Stufen: Grundmischungen, Mengen sowie Hell und dunkel. Als zweite Spielart zeigt
+„Was kommt raus?“ eine Mischung, und das Kind tippt die passende Farbe an.
 
 ## Für Kinder gemacht
 
@@ -59,8 +73,9 @@ Außerdem gibt es eine Vollbild-Ansicht und die Wahl zwischen Druckschrift und G
 - **Keine Anmeldung, keine Konten, keine Namen.** Die App fragt keine persönlichen Daten ab.
 - **Kein Tracking, keine Werbung, keine Cookies, keine Analyse-Dienste.**
 - **Keine Anfragen an fremde Server.** Schriften und Bilder liegen alle in der App selbst.
-- **Einstellungen bleiben auf dem Gerät.** Gewählte Übungen, Schrift, der Stand der Zähluhr und
-  die Bestätigung des Begrüßungshinweises werden im Browser gespeichert (`localStorage`). Diese
+- **Einstellungen bleiben auf dem Gerät.** Gewählte Übungen, Schrift, der Stand der Zähluhr,
+  die Bestätigung des Begrüßungshinweises und bei Tripel und Mischmasch die letzten 500 Antworten
+  werden im Browser gespeichert (`localStorage`). Diese
   Daten verlassen das Gerät nicht und lassen sich jederzeit über die Browser-Einstellungen
   löschen („Website-Daten löschen“).
 - **Hosting:** Die Seite wird über GitHub Pages ausgeliefert. Wie bei jeder Webseite verarbeitet
