@@ -1,0 +1,33 @@
+{
+  "spiel": "kuhmaschine",
+  "jahr": 2026,
+  "kw": 48,
+  "titel": "Leseblatt 5: Ee",
+  "notiz": "Silben mit L, M, S, T, Vokale a, o, i, e – dazu alle Wörter und Flugsilben der Blätter 1 bis 4",
+  "daten": {
+    "anlaute": ["L", "M", "S", "T"],
+    "vokale": ["a", "o", "i", "e"],
+    "silben": [
+      "Ma", "Mo", "Mi", "Me", "La", "Lo", "Li", "Le", "Sa", "So", "Si", "Se",
+      "Ta", "To", "Ti", "Te"
+    ],
+    "woerter": [
+      "Sa-lo-me", "Sa-la-te", "Lot-te", "E-mil", "O-ma", "sam-melt", "al-te", "Tas-sen",
+      "Le-o", "Ma-ma", "Lis-ten", "al-le", "E-sel", "Tas-te", "Lis-te", "Ses-sel",
+      "Sa-la-mi", "Mat-tis", "O-mas", "Em-ma", "li-la", "O-mi", "Li-sa", "Ma-mi",
+      "Sa-lat", "A-mi", "Lo-la", "La-mas", "Mi-lo", "Si-mi", "Li-mo", "Li-li",
+      "Si-ma", "Si-la-mi-so", "So-ma-si", "Mi-sa-mi-la", "La-mi-so-mi", "Mi-la", "I-mo", "Mi-mi",
+      "Li-lo", "Ma-la", "A-li", "Mi-la-mo-mi", "O-la-la-lo", "Mi-am-al-la", "Mo-mo", "La-ma",
+      "Mo-la", "A-mo", "Lo-lo-mo", "La-ma-la", "Ma-lo-ma", "Mo-lo-la", "A-la-lo"
+    ],
+    "flugsilben": [
+      "la", "lo", "li", "le", "ma", "mo", "mi", "ma", "me", "sa", "so", "si",
+      "ol", "il", "se", "ta", "to", "so", "si", "es", "at", "ta", "et", "te",
+      "em", "at", "ot", "es", "et", "el", "te", "at", "it", "te", "set", "ses",
+      "Ta", "To", "Ti", "Sa", "So", "Si", "Mo", "Ma", "Mi", "La", "Lo", "Li",
+      "ti", "al", "am", "As", "Ot", "Im", "alt", "mos", "ist", "lat", "Ast", "Tim",
+      "als", "los", "lam", "mol", "som", "til", "om", "Am", "im", "Is", "os", "Al",
+      "is", "Om", "Ol"
+    ]
+  }
+}
